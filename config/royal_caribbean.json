@@ -1,0 +1,176 @@
+{
+  "profile_name": "royal_caribbean",
+  "cruise_line": "Royal Caribbean International",
+  "cruise_line_short": "RCL",
+
+  "database_name": "CRUISE_YIELD_OPTIMIZATION",
+  "warehouse_name": "CRUISE_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for Cruise yield analytics",
+  "solution_title": "Cruise Yield Optimization",
+  "agent_prefix": "RCL",
+  "sample_ship_1": "Harmony of the Seas",
+  "sample_ship_2": "Symphony of the Seas",
+  "sample_ship_class_1": "Oasis",
+  "sample_tier_top": "Diamond+",
+  "sample_cabin_mid": "Balcony",
+  "sample_cabin_top": "Suite",
+
+  "loyalty_program": "Crown & Anchor Society",
+  "loyalty_tiers": ["Blue", "Gold", "Platinum", "Diamond", "Diamond+"],
+  "loyalty_tier_high": ["Diamond+", "Diamond"],
+  "loyalty_tier_mid": ["Platinum", "Gold"],
+  "loyalty_tier_high_sensitivity_threshold": 0.4,
+  "loyalty_tier_mid_sensitivity_threshold": 0.5,
+
+  "ships": [
+    {"name": "Harmony of the Seas",      "class": "Oasis",    "capacity": 6780},
+    {"name": "Symphony of the Seas",     "class": "Oasis",    "capacity": 6680},
+    {"name": "Wonder of the Seas",       "class": "Oasis",    "capacity": 6988},
+    {"name": "Oasis of the Seas",        "class": "Oasis",    "capacity": 6780},
+    {"name": "Allure of the Seas",       "class": "Oasis",    "capacity": 6780},
+    {"name": "Odyssey of the Seas",      "class": "Quantum",  "capacity": 4180},
+    {"name": "Anthem of the Seas",       "class": "Quantum",  "capacity": 4180},
+    {"name": "Ovation of the Seas",      "class": "Quantum",  "capacity": 4180},
+    {"name": "Navigator of the Seas",    "class": "Voyager",  "capacity": 3114},
+    {"name": "Independence of the Seas", "class": "Freedom",  "capacity": 3634}
+  ],
+
+  "cabin_classes": ["Interior", "Ocean View", "Balcony", "Suite", "Grand Suite"],
+  "base_prices": [800, 1100, 1400, 2200, 4500],
+
+  "regions": ["Caribbean", "Alaska", "Europe", "Mexico", "Bahamas", "Bermuda"],
+
+  "ports": [
+    {"port": "Miami",            "airport": "MIA"},
+    {"port": "Fort Lauderdale",  "airport": "FLL"},
+    {"port": "Tampa",            "airport": "TPA"},
+    {"port": "Orlando",          "airport": "MCO"},
+    {"port": "New York",         "airport": "JFK"},
+    {"port": "Boston",           "airport": "BOS"},
+    {"port": "Los Angeles",      "airport": "LAX"},
+    {"port": "San Diego",        "airport": "SAN"},
+    {"port": "Seattle",          "airport": "SEA"},
+    {"port": "Vancouver",        "airport": "YVR"},
+    {"port": "Barcelona",        "airport": "BCN"},
+    {"port": "Rome",             "airport": "FCO"},
+    {"port": "Southampton",      "airport": "LHR"},
+    {"port": "San Juan",         "airport": "SJU"},
+    {"port": "Galveston",        "airport": "IAH"},
+    {"port": "Baltimore",        "airport": "BWI"}
+  ],
+
+  "amenities": [
+    "FlowRider", "Perfect Storm Slides", "North Star Observation",
+    "Suite Lounge", "Private Pool", "Bionic Bar", "Rock Climbing Wall",
+    "Ultimate Abyss", "CocoCay Beach Club", "Thermal Suite",
+    "Wonderland Restaurant", "Vitality Spa", "Coastal Kitchen",
+    "Chef's Table", "Royal Theater VIP"
+  ],
+
+  "excursions": [
+    "Perfect Day CocoCay", "Cozumel Snorkeling Adventure",
+    "Jamaica Dunn's River Falls", "Grand Cayman Stingray City",
+    "Alaska Glacier Trek", "Juneau Whale Watching", "Barcelona Gothic Quarter",
+    "Santorini Wine Tour", "Rome Colosseum Tour", "St. Thomas Catamaran Sail",
+    "Ketchikan Lumberjack Show", "Belize Cave Tubing", "Aruba Jeep Adventure",
+    "Labadee Dragon Zipline", "Roatan Zipline & Beach",
+    "Curacao Beach Hopping", "Costa Maya Mayan Ruins"
+  ],
+
+  "dining_venues": [
+    "Chops Grille", "Giovannis Table", "Izumi", "Wonderland"
+  ],
+
+  "onboard_spending_categories": [
+    "Spa", "Dining", "Casino", "Shore Excursions", "Shopping",
+    "Beverage Package", "Internet", "Photo"
+  ],
+
+  "onboard_spending_venues": [
+    "Spa Venue 1", "Spa Venue 2", "Spa Venue 3",
+    "Dining Venue 1", "Dining Venue 2", "Dining Venue 3",
+    "Casino Venue 1", "Casino Venue 2", "Casino Venue 3",
+    "Shore Venue 1", "Shore Venue 2", "Shore Venue 3",
+    "Shopping Venue 1", "Shopping Venue 2", "Shopping Venue 3",
+    "Beverage Venue 1", "Beverage Venue 2", "Beverage Venue 3",
+    "Internet Venue 1", "Internet Venue 2", "Internet Venue 3",
+    "Photo Venue 1", "Photo Venue 2", "Photo Venue 3"
+  ],
+
+  "precruise_packages": [
+    "Deluxe Beverage Package", "Classic Beverage Package",
+    "Refreshment Package", "Unlimited Dining Package",
+    "3-Night Dining Package", "Shore Excursion Bundle",
+    "WiFi Package - Basic", "WiFi Package - Premium",
+    "Photo Package", "Spa Package"
+  ],
+
+  "precruise_categories": [
+    "Deluxe", "Classic", "Refreshment", "Unlimited", "3-Night",
+    "Shore", "WiFi", "WiFi", "Photo", "Spa"
+  ],
+
+  "service_categories": [
+    "SPA", "EXCURSIONS", "SPECIALTY_DINING", "BEVERAGE_PACKAGE",
+    "CASINO", "INTERNET", "PHOTOS", "SHORE_ACTIVITIES"
+  ],
+
+  "service_names": [
+    "Couples Massage", "Deep Tissue Massage", "Hot Stone Massage", "Facial Treatment",
+    "Snorkeling Tour", "Scuba Diving", "City Walking Tour", "Helicopter Tour",
+    "Chops Grille", "Giovannis Table", "Izumi", "Wonderland",
+    "Deluxe Beverage Package", "Refreshment Package", "Classic Soda Package",
+    "Slots", "Poker", "Blackjack",
+    "Surf & Stream Package", "Surf Package",
+    "Digital Photo Package", "Ultimate Photo Package",
+    "ATV Adventure", "Zip Line Adventure", "Parasailing", "Jet Ski Rental"
+  ],
+
+  "guest_segments": [
+    "Budget Cruiser", "Mainstream", "Premium Seeker", "Luxury Enthusiast",
+    "Adventure Seeker", "Family Focused", "Spa Enthusiast", "Casino Patron",
+    "Wine Aficionado", "Foodie"
+  ],
+
+  "feedback_categories": ["Dining", "Entertainment", "Service", "Amenities", "Excursions", "Accommodations"],
+
+  "feedback_subcategories": [
+    "Buffet", "Specialty Restaurant", "Main Dining Room", "Room Service",
+    "Bar Service", "Wait Staff", "Shows", "Live Music", "Nightclub", "Movies",
+    "Guest Services", "Concierge", "Cabin Steward", "Shore Excursion Desk",
+    "Pool Area", "Fitness Center", "Spa", "Sports Deck", "Casino", "Suite Lounge",
+    "Beach Excursion", "City Walking Tour", "Cultural Tour", "Snorkeling/Diving",
+    "Adventure Activity", "Cabin Size", "Cabin Cleanliness", "Balcony",
+    "Bathroom", "Bed Comfort"
+  ],
+
+  "feedback_templates_positive": [
+    " was fantastic - exactly what we hoped for.",
+    " exceeded all expectations. Highly recommend!"
+  ],
+  "feedback_templates_neutral": [
+    ". Average experience. Room for improvement."
+  ],
+  "feedback_templates_negative": [
+    " needs improvement. Not up to standard.",
+    " was disappointing compared to previous cruises."
+  ],
+
+  "airlines": [
+    "American Airlines", "Delta Air Lines", "United Airlines",
+    "Southwest Airlines", "JetBlue Airways", "Alaska Airlines",
+    "Spirit Airlines", "Frontier Airlines"
+  ],
+  "airline_codes": ["AA", "DL", "UA", "WN", "B6", "AS", "NK", "F9"],
+
+  "origin_airports": ["JFK", "LAX", "ORD", "ATL", "DFW", "SFO", "SEA", "BOS", "DEN", "PHX", "DTW", "MSP"],
+  "origin_cities": [
+    "New York", "Los Angeles", "Chicago", "Atlanta", "Dallas",
+    "San Francisco", "Seattle", "Boston", "Denver", "Phoenix", "Detroit", "Minneapolis"
+  ],
+
+  "flight_dest_airports": ["MIA", "FLL", "TPA", "MCO", "SEA", "LAX", "SJU", "GAL"],
+  "flight_dest_cities": [
+    "Miami", "Fort Lauderdale", "Tampa", "Orlando", "Seattle", "Los Angeles", "San Juan", "Galveston"
+  ]
+}

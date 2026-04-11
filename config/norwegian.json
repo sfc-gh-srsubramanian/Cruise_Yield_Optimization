@@ -1,0 +1,178 @@
+{
+  "profile_name": "norwegian",
+  "cruise_line": "Norwegian Cruise Line",
+  "cruise_line_short": "NCL",
+
+  "database_name": "NCL_YIELD_OPTIMIZATION",
+  "warehouse_name": "NCL_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for NCL yield analytics",
+  "solution_title": "NCL Yield Optimization",
+  "agent_prefix": "NCL",
+  "sample_ship_1": "Norwegian Prima",
+  "sample_ship_2": "Norwegian Encore",
+  "sample_ship_class_1": "Prima",
+  "sample_tier_top": "Ambassador",
+  "sample_cabin_mid": "Balcony",
+  "sample_cabin_top": "Suite",
+
+  "loyalty_program": "Latitudes Rewards",
+  "loyalty_tiers": ["Bronze", "Silver", "Gold", "Platinum", "Ambassador"],
+  "loyalty_tier_high": ["Ambassador", "Platinum"],
+  "loyalty_tier_mid": ["Gold", "Silver"],
+  "loyalty_tier_high_sensitivity_threshold": 0.4,
+  "loyalty_tier_mid_sensitivity_threshold": 0.5,
+
+  "ships": [
+    {"name": "Norwegian Prima",     "class": "Prima",           "capacity": 3215},
+    {"name": "Norwegian Viva",      "class": "Prima",           "capacity": 3219},
+    {"name": "Norwegian Aqua",      "class": "Prima Plus",      "capacity": 3571},
+    {"name": "Norwegian Encore",    "class": "Breakaway Plus",  "capacity": 3998},
+    {"name": "Norwegian Bliss",     "class": "Breakaway Plus",  "capacity": 4004},
+    {"name": "Norwegian Joy",       "class": "Breakaway Plus",  "capacity": 3883},
+    {"name": "Norwegian Escape",    "class": "Breakaway Plus",  "capacity": 4266},
+    {"name": "Norwegian Breakaway", "class": "Breakaway",       "capacity": 3969},
+    {"name": "Norwegian Getaway",   "class": "Breakaway",       "capacity": 3969},
+    {"name": "Norwegian Epic",      "class": "Epic",            "capacity": 4100}
+  ],
+
+  "cabin_classes": ["Inside", "Oceanview", "Balcony", "Mini Suite", "Suite", "The Haven"],
+  "base_prices": [700, 1000, 1300, 1800, 2800, 5500],
+
+  "regions": ["Caribbean", "Alaska", "Mediterranean", "Northern Europe", "Bermuda", "Hawaii"],
+
+  "ports": [
+    {"port": "Miami",            "airport": "MIA"},
+    {"port": "New York",         "airport": "JFK"},
+    {"port": "Seattle",          "airport": "SEA"},
+    {"port": "Los Angeles",      "airport": "LAX"},
+    {"port": "Tampa",            "airport": "TPA"},
+    {"port": "Orlando",          "airport": "MCO"},
+    {"port": "San Juan",         "airport": "SJU"},
+    {"port": "Galveston",        "airport": "IAH"},
+    {"port": "Boston",           "airport": "BOS"},
+    {"port": "Honolulu",         "airport": "HNL"},
+    {"port": "Barcelona",        "airport": "BCN"},
+    {"port": "Rome",             "airport": "FCO"},
+    {"port": "Southampton",      "airport": "LHR"},
+    {"port": "Copenhagen",       "airport": "CPH"},
+    {"port": "Reykjavik",        "airport": "KEF"},
+    {"port": "Vancouver",        "airport": "YVR"}
+  ],
+
+  "amenities": [
+    "Galaxy Pavilion", "Ocean Boulevard", "The Drop Slide",
+    "Go-Kart Speedway", "Aqua Park", "The Haven Sundeck",
+    "Mandara Spa", "Indulge Outdoor Lounge", "Infinity Beach",
+    "Bull's Eye Laser Tag", "Vibe Beach Club", "Splash Academy",
+    "Pulse Fitness Center", "Thermal Suite", "Prima Theater"
+  ],
+
+  "excursions": [
+    "Great Stirrup Cay Beach Day", "Cozumel Catamaran Snorkel",
+    "Harvest Caye Zip Line", "Roatan Island Explorer",
+    "Alaska Glacier Discovery", "Juneau Dog Sledding",
+    "Santorini Caldera Cruise", "Dubrovnik Walking Tour",
+    "Bermuda Crystal Caves", "Reykjavik Golden Circle",
+    "Mykonos Beach Break", "Amalfi Coast Boat Tour",
+    "Ketchikan Totem Poles", "Nassau Atlantis Day Pass",
+    "St. Thomas Island Tour", "Aruba Off-Road Adventure",
+    "Costa Maya Ruins & Beach"
+  ],
+
+  "dining_venues": [
+    "Le Bistro", "Cagney's Steakhouse", "Food Republic", "Ocean Blue"
+  ],
+
+  "onboard_spending_categories": [
+    "Spa", "Dining", "Casino", "Shore Excursions", "Shopping",
+    "Beverage Package", "Internet", "Photo"
+  ],
+
+  "onboard_spending_venues": [
+    "Mandara Spa 1", "Mandara Spa 2", "Thermal Suite",
+    "Le Bistro", "Cagney's Steakhouse", "Food Republic",
+    "Casino at Sea 1", "Casino at Sea 2", "Casino at Sea 3",
+    "Shore Desk 1", "Shore Desk 2", "Shore Desk 3",
+    "The Shops 1", "The Shops 2", "The Shops 3",
+    "Sugarcane Mojito Bar", "A-List Bar", "Skyline Bar",
+    "iConnect Cafe 1", "iConnect Cafe 2", "iConnect Cafe 3",
+    "Photo Gallery 1", "Photo Gallery 2", "Photo Gallery 3"
+  ],
+
+  "precruise_packages": [
+    "Premium Beverage Package", "Soda Package",
+    "Water & Coffee Package", "Specialty Dining Package",
+    "3-Meal Dining Package", "Shore Excursion Credit",
+    "WiFi Package - Basic", "WiFi Package - Unlimited",
+    "Photo Package", "Mandara Spa Package"
+  ],
+
+  "precruise_categories": [
+    "Premium", "Soda", "Water", "Specialty", "3-Meal",
+    "Shore", "WiFi", "WiFi", "Photo", "Spa"
+  ],
+
+  "service_categories": [
+    "SPA", "EXCURSIONS", "SPECIALTY_DINING", "BEVERAGE_PACKAGE",
+    "CASINO", "INTERNET", "PHOTOS", "SHORE_ACTIVITIES"
+  ],
+
+  "service_names": [
+    "Couples Massage", "Deep Tissue Massage", "Hot Stone Therapy", "Elemis Facial",
+    "Catamaran Snorkel", "Scuba Certification", "City Walking Tour", "Helicopter Tour",
+    "Le Bistro Dinner", "Cagney's Prix Fixe", "Food Republic Tasting", "Ocean Blue Dinner",
+    "Premium Beverage Package", "Soda Package", "Coffee Package",
+    "Slots", "Poker", "Blackjack",
+    "Unlimited WiFi", "Social Media WiFi",
+    "Digital Photo Package", "Ultimate Photo Package",
+    "Zip Line Adventure", "Go-Kart Race", "Laser Tag Session", "Aqua Park Access"
+  ],
+
+  "guest_segments": [
+    "Budget Cruiser", "Free at Sea Fan", "Premium Seeker", "Haven Enthusiast",
+    "Adventure Seeker", "Family Focused", "Spa Devotee", "Casino Patron",
+    "Wine Aficionado", "Foodie"
+  ],
+
+  "feedback_categories": ["Dining", "Entertainment", "Service", "Amenities", "Excursions", "Accommodations"],
+
+  "feedback_subcategories": [
+    "Garden Cafe", "Specialty Restaurant", "Main Dining Room", "Room Service",
+    "Bar Service", "Wait Staff", "Shows", "Live Music", "Nightclub", "Movies",
+    "Guest Services", "Concierge", "Cabin Steward", "Shore Excursion Desk",
+    "Pool Area", "Fitness Center", "Spa", "Sports Deck", "Casino", "Haven Lounge",
+    "Beach Excursion", "City Walking Tour", "Cultural Tour", "Snorkeling/Diving",
+    "Adventure Activity", "Cabin Size", "Cabin Cleanliness", "Balcony",
+    "Bathroom", "Bed Comfort"
+  ],
+
+  "feedback_templates_positive": [
+    " was fantastic - exactly what we hoped for.",
+    " exceeded all expectations. Highly recommend!"
+  ],
+  "feedback_templates_neutral": [
+    ". Average experience. Room for improvement."
+  ],
+  "feedback_templates_negative": [
+    " needs improvement. Not up to standard.",
+    " was disappointing compared to previous cruises."
+  ],
+
+  "airlines": [
+    "American Airlines", "Delta Air Lines", "United Airlines",
+    "Southwest Airlines", "JetBlue Airways", "Alaska Airlines",
+    "Spirit Airlines", "Frontier Airlines"
+  ],
+  "airline_codes": ["AA", "DL", "UA", "WN", "B6", "AS", "NK", "F9"],
+
+  "origin_airports": ["JFK", "LAX", "ORD", "ATL", "DFW", "SFO", "SEA", "BOS", "DEN", "PHX", "DTW", "MSP"],
+  "origin_cities": [
+    "New York", "Los Angeles", "Chicago", "Atlanta", "Dallas",
+    "San Francisco", "Seattle", "Boston", "Denver", "Phoenix", "Detroit", "Minneapolis"
+  ],
+
+  "flight_dest_airports": ["MIA", "JFK", "TPA", "MCO", "SEA", "LAX", "SJU", "IAH"],
+  "flight_dest_cities": [
+    "Miami", "New York", "Tampa", "Orlando", "Seattle", "Los Angeles", "San Juan", "Galveston"
+  ]
+}

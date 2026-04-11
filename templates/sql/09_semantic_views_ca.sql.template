@@ -1,0 +1,259 @@
+-- =============================================================================
+-- {{SOLUTION_TITLE}} - Cortex Analyst Semantic Views
+-- Layer: Analytics (Gold)
+-- Description: Semantic views with Cortex Analyst extensions, verified queries,
+--              sample values, and onboarding questions
+-- =============================================================================
+
+USE SCHEMA {{DATABASE_NAME}}.ANALYTICS;
+
+-- Internal stage for semantic model YAML files
+CREATE OR REPLACE STAGE SEMANTIC_STAGE
+    COMMENT = 'Stage for semantic view YAML files'
+    DIRECTORY = (ENABLE = TRUE);
+
+-- ---------------------------------------------------------------------------
+-- YIELD_ANALYTICS: Yield metrics with Cortex Analyst extension
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE SEMANTIC VIEW YIELD_ANALYTICS
+    TABLES (
+        SAILINGS AS {{DATABASE_NAME}}.ANALYTICS.V_SAILING_YIELD
+            COMMENT = 'Sailing-level yield metrics with revenue breakdown'
+    )
+    DIMENSIONS (
+        SAILINGS.SAILING_ID AS sailing_id COMMENT = 'Unique sailing identifier',
+        SAILINGS.SHIP_NAME AS ship_name COMMENT = 'Name of the cruise ship',
+        SAILINGS.SHIP_CLASS AS ship_class COMMENT = 'Ship class category',
+        SAILINGS.ITINERARY_REGION AS itinerary_region COMMENT = 'Geographic region of the cruise itinerary',
+        SAILINGS.DEPARTURE_PORT AS departure_port COMMENT = 'Port of departure',
+        SAILINGS.SAILING_DATE AS sailing_date COMMENT = 'Date of sailing departure'
+    )
+    METRICS (
+        SAILINGS.NET_YIELD AS SUM(net_revenue) / NULLIF(SUM(passenger_days), 0) COMMENT = 'Net revenue per available passenger cruise day (APCD)',
+        SAILINGS.OCCUPANCY_RATE AS AVG(occupancy_rate) COMMENT = 'Percentage of ship capacity booked (76-100% range)',
+        SAILINGS.CABIN_REVENUE AS SUM(cabin_revenue) COMMENT = 'Total cabin ticket revenue',
+        SAILINGS.ONBOARD_REVENUE AS SUM(onboard_revenue) COMMENT = 'Total onboard spending revenue',
+        SAILINGS.PRECRUISE_REVENUE AS SUM(precruise_revenue) COMMENT = 'Total pre-cruise package revenue',
+        SAILINGS.TOTAL_REVENUE AS SUM(net_revenue) COMMENT = 'Total combined revenue (cabin + onboard + precruise)',
+        SAILINGS.PASSENGER_COUNT AS SUM(booked_passengers) COMMENT = 'Total booked passengers',
+        SAILINGS.SAILING_COUNT AS COUNT(DISTINCT sailing_id) COMMENT = 'Number of sailings'
+    )
+    COMMENT = 'Yield performance metrics including net yield, occupancy rates, booking velocity, and revenue forecasts for cruise sailings. Supports filtering by ship, region, port, and time period.'
+    WITH EXTENSION (CA='{"tables":[{"name":"sailings","dimensions":[{"name":"sailing_id"},{"name":"ship_name","sample_values":{{SAMPLE_SHIPS_JSON}}},{"name":"ship_class","sample_values":{{SAMPLE_CLASSES_JSON}}},{"name":"itinerary_region","sample_values":{{SAMPLE_REGIONS_JSON}}},{"name":"departure_port","sample_values":{{SAMPLE_PORTS_JSON}}}],"metrics":[{"name":"net_yield"},{"name":"occupancy_rate"},{"name":"cabin_revenue"},{"name":"onboard_revenue"},{"name":"precruise_revenue"},{"name":"total_revenue"},{"name":"passenger_count"},{"name":"sailing_count"}],"time_dimensions":[{"name":"sailing_date"}]}],"verified_queries":[{"name":"net_yield_by_region","sql":"SELECT itinerary_region, \\n       ROUND(SUM(net_revenue) / NULLIF(SUM(passenger_days), 0), 2) as net_yield\\nFROM __sailings \\nGROUP BY itinerary_region \\nORDER BY net_yield DESC\\n","question":"What is the net yield by region?","use_as_onboarding_question":true},{"name":"top_performing_ships","sql":"SELECT ship_name, ship_class,\\n       ROUND(SUM(net_revenue) / NULLIF(SUM(passenger_days), 0), 2) as net_yield,\\n       ROUND(AVG(occupancy_rate) * 100, 1) as avg_occupancy_pct\\nFROM __sailings\\nGROUP BY ship_name, ship_class\\nORDER BY net_yield DESC\\nLIMIT 10\\n","question":"Which ships have the highest net yield?","use_as_onboarding_question":true},{"name":"occupancy_by_month","sql":"SELECT DATE_TRUNC(''month'', sailing_date) as month,\\n       ROUND(AVG(occupancy_rate) * 100, 1) as avg_occupancy_pct,\\n       COUNT(*) as sailing_count\\nFROM __sailings\\nGROUP BY DATE_TRUNC(''month'', sailing_date)\\nORDER BY month\\n","question":"What is the occupancy rate trend by month?","use_as_onboarding_question":true},{"name":"ship_performance_detail","sql":"SELECT ship_name, ship_class,\\n       COUNT(*) as sailings,\\n       ROUND(SUM(cabin_revenue), 0) as total_cabin_rev,\\n       ROUND(SUM(onboard_revenue), 0) as total_onboard_rev,\\n       ROUND(SUM(precruise_revenue), 0) as total_precruise_rev,\\n       ROUND(SUM(net_revenue), 0) as total_revenue\\nFROM __sailings\\nGROUP BY ship_name, ship_class\\nORDER BY total_revenue DESC\\n","question":"Show detailed performance metrics for each ship","use_as_onboarding_question":false}]}');
+
+-- ---------------------------------------------------------------------------
+-- PRICING_ANALYTICS: Pricing performance with Cortex Analyst extension
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE SEMANTIC VIEW PRICING_ANALYTICS
+    TABLES (
+        PRICING AS {{DATABASE_NAME}}.ANALYTICS.V_PRICING_PERFORMANCE
+            COMMENT = 'Pricing performance by ship, cabin class, region and time period'
+    )
+    DIMENSIONS (
+        PRICING.SHIP_NAME AS ship_name COMMENT = 'Name of the cruise ship',
+        PRICING.SHIP_CLASS AS ship_class COMMENT = 'Ship class category',
+        PRICING.ITINERARY_REGION AS itinerary_region COMMENT = 'Geographic region of the cruise itinerary',
+        PRICING.DEPARTURE_PORT AS departure_port COMMENT = 'Port of departure',
+        PRICING.CABIN_CLASS AS cabin_class COMMENT = 'Cabin category',
+        PRICING.PRICE_TIER AS price_tier COMMENT = 'Price tier classification',
+        PRICING.EVENT_MONTH AS event_month COMMENT = 'Month of pricing events'
+    )
+    METRICS (
+        PRICING.IMPRESSIONS AS SUM(impressions) COMMENT = 'Total price quote impressions',
+        PRICING.CONVERSIONS AS SUM(conversions) COMMENT = 'Total booking conversions',
+        PRICING.AVG_PRICE AS AVG(avg_offered_price) COMMENT = 'Average price shown to guests'
+    )
+    COMMENT = 'Price performance metrics including conversion rates, price elasticity, and revenue per impression for pricing optimization. Supports filtering by ship, region, cabin class, and time period.'
+    WITH EXTENSION (CA='{"tables":[{"name":"pricing","dimensions":[{"name":"ship_name","sample_values":{{SAMPLE_SHIPS_JSON}}},{"name":"ship_class","sample_values":{{SAMPLE_CLASSES_JSON}}},{"name":"itinerary_region","sample_values":{{SAMPLE_REGIONS_JSON}}},{"name":"departure_port","sample_values":{{SAMPLE_PORTS_JSON}}},{"name":"cabin_class","sample_values":{{SAMPLE_CABINS_JSON}}},{"name":"price_tier","sample_values":["Budget","Standard","Premium","Luxury"]}],"metrics":[{"name":"impressions"},{"name":"conversions"},{"name":"avg_price"}],"time_dimensions":[{"name":"event_month"}]}],"verified_queries":[{"name":"conversion_by_cabin_class","sql":"SELECT cabin_class,\\n       SUM(impressions) as total_impressions,\\n       SUM(conversions) as total_conversions,\\n       ROUND(SUM(conversions) * 1.0 / NULLIF(SUM(impressions), 0), 4) as conversion_rate\\nFROM __pricing\\nGROUP BY cabin_class\\nORDER BY conversion_rate DESC\\n","question":"What is the conversion rate by cabin class?","use_as_onboarding_question":true},{"name":"pricing_by_ship","sql":"SELECT ship_name, ship_class,\\n       SUM(impressions) as total_impressions,\\n       SUM(conversions) as total_conversions,\\n       ROUND(SUM(conversions) * 1.0 / NULLIF(SUM(impressions), 0), 4) as conversion_rate,\\n       ROUND(AVG(avg_offered_price), 2) as avg_price\\nFROM __pricing\\nGROUP BY ship_name, ship_class\\nORDER BY conversion_rate DESC\\n","question":"What is the pricing performance for each ship?","use_as_onboarding_question":true},{"name":"pricing_trend","sql":"SELECT event_month,\\n       ROUND(AVG(avg_offered_price), 2) as avg_price,\\n       ROUND(SUM(conversions) * 1.0 / NULLIF(SUM(impressions), 0), 4) as conversion_rate\\nFROM __pricing\\nGROUP BY event_month\\nORDER BY event_month\\n","question":"What is the pricing trend over time?","use_as_onboarding_question":true}]}');
+
+-- ---------------------------------------------------------------------------
+-- PARTNER_SIGNALS: Airline demand with Cortex Analyst extension
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE SEMANTIC VIEW PARTNER_SIGNALS
+    TABLES (
+        AIRLINE_SIGNALS AS {{DATABASE_NAME}}.CLEAN_ROOM.V_AIRLINE_DEMAND
+            COMMENT = 'Airline pricing and demand signals by port'
+    )
+    DIMENSIONS (
+        AIRLINE_SIGNALS.DEPARTURE_PORT AS departure_port COMMENT = 'Cruise departure port',
+        AIRLINE_SIGNALS.AIRPORT_CODE AS airport_code COMMENT = 'Associated airport code',
+        AIRLINE_SIGNALS.IS_ANOMALY AS is_anomaly COMMENT = 'Flag indicating anomalous signal',
+        AIRLINE_SIGNALS.ANOMALY_DESCRIPTION AS anomaly_description COMMENT = 'Description of the anomaly detected',
+        AIRLINE_SIGNALS.SIGNAL_DATE AS signal_date COMMENT = 'Date of the signal'
+    )
+    METRICS (
+        AIRLINE_SIGNALS.AVG_PRICE_INDEX AS AVG(price_index) COMMENT = 'Average price index (100 = baseline)',
+        AIRLINE_SIGNALS.AVG_DEMAND_SCORE AS AVG(demand_score) COMMENT = 'Average demand score (0-1)',
+        AIRLINE_SIGNALS.TOTAL_AVAILABLE_SEATS AS SUM(available_seats) COMMENT = 'Total available flight seats',
+        AIRLINE_SIGNALS.SIGNAL_COUNT AS COUNT(*) COMMENT = 'Number of signals',
+        AIRLINE_SIGNALS.ANOMALY_COUNT AS SUM(CASE WHEN is_anomaly THEN 1 ELSE 0 END) COMMENT = 'Count of anomalous signals'
+    )
+    COMMENT = 'Airline and travel partner demand signals including flight pricing, capacity utilization, and anomaly detection for partner intelligence.'
+    WITH EXTENSION (CA='{"tables":[{"name":"airline_signals","dimensions":[{"name":"departure_port","sample_values":{{SAMPLE_PORTS_JSON}}},{"name":"airport_code","sample_values":{{SAMPLE_AIRPORTS_JSON}}},{"name":"is_anomaly"},{"name":"anomaly_description"}],"metrics":[{"name":"avg_price_index"},{"name":"avg_demand_score"},{"name":"total_available_seats"},{"name":"signal_count"},{"name":"anomaly_count"}],"time_dimensions":[{"name":"signal_date"}]}],"verified_queries":[{"name":"current_price_signals","sql":"SELECT departure_port, airport_code,\\n       ROUND(AVG(price_index), 1) as avg_price_index,\\n       ROUND(AVG(demand_score), 3) as avg_demand,\\n       COUNT(*) as signal_count\\nFROM __airline_signals\\nWHERE signal_date >= DATEADD(''day'', -7, CURRENT_DATE())\\nGROUP BY departure_port, airport_code\\nORDER BY avg_price_index DESC\\n","question":"What are the current airline pricing signals by port?","use_as_onboarding_question":true},{"name":"anomaly_alerts","sql":"SELECT signal_date, departure_port, airport_code,\\n       ROUND(price_index, 1) as price_index,\\n       ROUND(demand_score, 3) as demand_score,\\n       anomaly_description\\nFROM __airline_signals\\nWHERE is_anomaly = TRUE\\nORDER BY signal_date DESC\\nLIMIT 10\\n","question":"Are there any unusual airline pricing signals?","use_as_onboarding_question":true},{"name":"weekly_price_trend","sql":"SELECT DATE_TRUNC(''week'', signal_date) as week,\\n       ROUND(AVG(price_index), 1) as avg_price_index,\\n       ROUND(AVG(demand_score), 3) as avg_demand,\\n       COUNT(*) as signals\\nFROM __airline_signals\\nGROUP BY DATE_TRUNC(''week'', signal_date)\\nORDER BY week\\n","question":"What is the weekly airline price trend?","use_as_onboarding_question":true},{"name":"demand_by_port","sql":"SELECT departure_port,\\n       ROUND(AVG(demand_score), 3) as avg_demand,\\n       ROUND(AVG(available_seats), 0) as avg_seats,\\n       COUNT(*) as signals\\nFROM __airline_signals\\nGROUP BY departure_port\\nORDER BY avg_demand DESC\\n","question":"Which ports have the highest airline demand?","use_as_onboarding_question":false}]}');
+
+-- ---------------------------------------------------------------------------
+-- GUEST_360: Comprehensive guest intelligence with Cortex Analyst extension
+-- This is the most complex semantic view with 5 tables, relationships, 
+-- facts, dimensions, metrics, synonyms, and verified queries
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE SEMANTIC VIEW GUEST_360
+    TABLES (
+        GUESTS AS {{DATABASE_NAME}}.CURATED.GUEST_360
+            UNIQUE (GUEST_360_ID)
+            COMMENT = 'Unified guest profile with calculated metrics',
+        {{DATABASE_NAME}}.CURATED.GUEST_BOOKINGS
+            COMMENT = 'Cruise booking details linking guests to specific sailings, ships, and cabin categories. Use for questions about upcoming or past sailings, cabin types, ships, and booking analysis.',
+        {{DATABASE_NAME}}.CURATED.GUEST_FLIGHTS
+            COMMENT = 'Flight bookings and airline travel data for cruise guests',
+        {{DATABASE_NAME}}.CURATED.GUEST_SERVICES
+            COMMENT = 'Service transactions and onboard purchases by guests',
+        {{DATABASE_NAME}}.CURATED.GUEST_FEEDBACK
+            COMMENT = 'Guest feedback and reviews from post-cruise surveys'
+    )
+    RELATIONSHIPS (
+        BOOKINGS_TO_GUESTS AS GUEST_BOOKINGS(GUEST_360_ID) REFERENCES GUESTS(GUEST_360_ID),
+        FLIGHTS_TO_GUESTS AS GUEST_FLIGHTS(GUEST_360_ID) REFERENCES GUESTS(GUEST_360_ID),
+        SERVICES_TO_GUESTS AS GUEST_SERVICES(GUEST_360_ID) REFERENCES GUESTS(GUEST_360_ID),
+        FEEDBACK_TO_GUESTS AS GUEST_FEEDBACK(GUEST_360_ID) REFERENCES GUESTS(GUEST_360_ID)
+    )
+    FACTS (
+        GUESTS.TOTAL_ONBOARD_SPEND AS total_onboard_spend
+            WITH SYNONYMS = ('total onboard spending', 'cumulative onboard spend', 'total_onboard_spend')
+            COMMENT = 'Total cumulative onboard spend across all cruises',
+        GUESTS.PRICE_SENSITIVITY AS price_sensitivity
+            WITH SYNONYMS = ('price sensitivity score')
+            COMMENT = 'Price sensitivity score (0-1, lower = less price sensitive, higher = more price sensitive)',
+        GUEST_BOOKINGS.DURATION_NIGHTS AS duration_nights
+            COMMENT = 'Duration of the cruise in nights',
+        GUEST_BOOKINGS.NUM_GUESTS AS num_guests
+            COMMENT = 'Number of guests on the booking',
+        GUEST_BOOKINGS.BASE_PRICE AS base_price
+            COMMENT = 'Base price before adjustments',
+        GUEST_BOOKINGS.OFFERED_PRICE AS offered_price
+            COMMENT = 'Final offered price to guest',
+        GUEST_BOOKINGS.TOTAL_CABIN_REVENUE AS total_cabin_revenue
+            COMMENT = 'Total revenue from cabin',
+        GUEST_BOOKINGS.DAYS_BEFORE_SAILING AS days_before_sailing
+            COMMENT = 'Days between booking and sailing',
+        GUEST_FEEDBACK.OVERALL_RATING AS overall_rating
+            WITH SYNONYMS = ('cruise rating', 'overall score')
+            COMMENT = 'Overall cruise rating (1-5 stars)',
+        GUEST_FEEDBACK.CATEGORY_RATING AS category_rating
+            WITH SYNONYMS = ('category score', 'specific rating')
+            COMMENT = 'Rating for specific category (1-5 stars)'
+    )
+    DIMENSIONS (
+        -- Guest dimensions
+        GUESTS.GUEST_360_ID AS guest_360_id COMMENT = 'Unique guest identifier',
+        GUESTS.GUEST_NAME AS guest_name COMMENT = 'Full name of the guest',
+        GUESTS.GUEST_SEGMENT AS guest_segment COMMENT = 'Behavioral guest segment',
+        GUESTS.LOYALTY_TIER AS loyalty_tier COMMENT = '{{LOYALTY_PROGRAM}} loyalty tier',
+        GUESTS.PREFERRED_CABIN_CLASS AS preferred_cabin_class COMMENT = 'Guest''s preferred cabin type',
+        GUESTS.PREFERRED_REGION AS preferred_region COMMENT = 'Guest''s preferred cruise region',
+        GUESTS.VALUE_SEGMENT AS value_segment COMMENT = 'Value-based guest segment',
+        GUESTS.LAST_BOOKING_DATE AS last_booking_date COMMENT = 'Most recent booking date',
+        GUESTS.MEMBER_SINCE AS member_since COMMENT = 'Date guest joined loyalty program',
+        -- Booking dimensions
+        GUEST_BOOKINGS.BOOKING_ID AS booking_id COMMENT = 'Unique booking identifier',
+        GUEST_BOOKINGS.GUEST_360_ID AS guest_360_id COMMENT = 'Guest identifier (links to guests table)',
+        GUEST_BOOKINGS.SAILING_ID AS sailing_id COMMENT = 'Unique sailing identifier',
+        GUEST_BOOKINGS.SHIP_NAME AS ship_name COMMENT = 'Name of the cruise ship',
+        GUEST_BOOKINGS.SHIP_CLASS AS ship_class COMMENT = 'Class/category of the ship',
+        GUEST_BOOKINGS.ITINERARY_REGION AS itinerary_region COMMENT = 'Geographic region of the cruise itinerary',
+        GUEST_BOOKINGS.DEPARTURE_PORT AS departure_port COMMENT = 'Port of departure for the sailing',
+        GUEST_BOOKINGS.CABIN_CLASS AS cabin_class
+            WITH SYNONYMS = ('cabin category', 'cabin type', 'room category', 'stateroom category')
+            COMMENT = 'Cabin category/class for the booking (Interior, Ocean View, Balcony, Suite, Grand Suite)',
+        GUEST_BOOKINGS.BOOKING_STATUS AS booking_status COMMENT = 'Current status of the booking',
+        GUEST_BOOKINGS.BOOKING_CHANNEL AS booking_channel COMMENT = 'Channel through which booking was made',
+        GUEST_BOOKINGS.SAILING_DATE AS sailing_date COMMENT = 'Date of the sailing departure',
+        GUEST_BOOKINGS.BOOKING_DATE AS booking_date COMMENT = 'Date the booking was made',
+        GUEST_BOOKINGS.SAILING_STATUS AS sailing_status
+            WITH SYNONYMS = ('upcoming sailing', 'future sailing', 'past sailing')
+            COMMENT = 'Whether the sailing is upcoming (future) or past',
+        -- Flight dimensions
+        GUEST_FLIGHTS.FLIGHT_ID AS flight_id COMMENT = 'Unique flight record identifier',
+        GUEST_FLIGHTS.GUEST_360_ID AS guest_360_id COMMENT = 'Guest identifier (links to guests table)',
+        GUEST_FLIGHTS.BOOKING_ID AS booking_id COMMENT = 'Cruise booking identifier',
+        GUEST_FLIGHTS.AIRLINE AS airline COMMENT = 'Airline carrier name',
+        GUEST_FLIGHTS.FLIGHT_NUMBER AS flight_number COMMENT = 'Flight number',
+        GUEST_FLIGHTS.ORIGIN_AIRPORT AS origin_airport COMMENT = 'Origin airport code',
+        GUEST_FLIGHTS.ORIGIN_CITY AS origin_city COMMENT = 'Origin city name',
+        GUEST_FLIGHTS.DESTINATION_AIRPORT AS destination_airport COMMENT = 'Destination airport code',
+        GUEST_FLIGHTS.DESTINATION_CITY AS destination_city COMMENT = 'Destination city name',
+        GUEST_FLIGHTS.FLIGHT_TYPE AS flight_type COMMENT = 'Whether inbound or outbound flight',
+        GUEST_FLIGHTS.BOOKING_SOURCE AS booking_source COMMENT = 'How the flight was booked',
+        GUEST_FLIGHTS.FLIGHT_DATE AS flight_date COMMENT = 'Date of the flight',
+        -- Service dimensions
+        GUEST_SERVICES.SERVICE_ID AS service_id COMMENT = 'Unique service transaction identifier',
+        GUEST_SERVICES.GUEST_360_ID AS guest_360_id COMMENT = 'Guest identifier (links to guests table)',
+        GUEST_SERVICES.SERVICE_CATEGORY AS service_category COMMENT = 'Category of onboard service',
+        GUEST_SERVICES.SERVICE_NAME AS service_name COMMENT = 'Specific service or product name',
+        GUEST_SERVICES.SAILING_ID AS sailing_id COMMENT = 'Sailing identifier for service',
+        GUEST_SERVICES.PURCHASE_CHANNEL AS purchase_channel COMMENT = 'Channel used to purchase the service',
+        GUEST_SERVICES.SERVICE_DATE AS service_date COMMENT = 'Date of the service transaction',
+        -- Feedback dimensions
+        GUEST_FEEDBACK.FEEDBACK_ID AS feedback_id COMMENT = 'Unique feedback record identifier',
+        GUEST_FEEDBACK.GUEST_360_ID AS guest_360_id COMMENT = 'Guest identifier (links to guests table)',
+        GUEST_FEEDBACK.BOOKING_ID AS booking_id COMMENT = 'Booking identifier for this feedback',
+        GUEST_FEEDBACK.SAILING_ID AS sailing_id COMMENT = 'Sailing identifier',
+        GUEST_FEEDBACK.SHIP_NAME AS ship_name COMMENT = 'Name of the ship for this feedback',
+        GUEST_FEEDBACK.FEEDBACK_CATEGORY AS feedback_category
+            WITH SYNONYMS = ('review category', 'feedback type')
+            COMMENT = 'Category of feedback (Dining, Entertainment, Amenities, Excursions, etc.)',
+        GUEST_FEEDBACK.FEEDBACK_SUBCATEGORY AS feedback_subcategory
+            WITH SYNONYMS = ('specific feedback area', 'review subcategory')
+            COMMENT = 'Specific subcategory of feedback',
+        GUEST_FEEDBACK.SENTIMENT AS sentiment COMMENT = 'Overall sentiment of the feedback',
+        GUEST_FEEDBACK.FEEDBACK_TEXT AS feedback_text
+            WITH SYNONYMS = ('review text', 'guest comments', 'feedback comments')
+            COMMENT = 'Full text of guest feedback/review',
+        GUEST_FEEDBACK.MENTIONED_AMENITIES AS mentioned_amenities
+            WITH SYNONYMS = ('amenities mentioned', 'favorite amenities')
+            COMMENT = 'Luxury amenities mentioned favorably in feedback',
+        GUEST_FEEDBACK.MENTIONED_EXCURSIONS AS mentioned_excursions
+            WITH SYNONYMS = ('excursions mentioned', 'favorite excursions')
+            COMMENT = 'Excursions mentioned in feedback',
+        GUEST_FEEDBACK.WOULD_RECOMMEND AS would_recommend COMMENT = 'Whether guest would recommend to others',
+        GUEST_FEEDBACK.FEEDBACK_DATE AS feedback_date COMMENT = 'Date feedback was submitted'
+    )
+    METRICS (
+        -- Guest metrics
+        GUESTS.AVG_LIFETIME_VALUE AS AVG(lifetime_value) COMMENT = 'Average lifetime value per guest',
+        GUESTS.AVG_ONBOARD_SPEND AS AVG(historical_avg_onboard_spend) COMMENT = 'Average onboard spend per cruise',
+        GUESTS.AVG_PRICE_SENSITIVITY AS AVG(price_sensitivity) COMMENT = 'Average price sensitivity (0-1, lower = less sensitive)',
+        GUESTS.AVG_SPENDING_PROPENSITY_SCORE AS AVG(1 - price_sensitivity)
+            WITH SYNONYMS = ('spending propensity', 'spending_propensity_score', 'propensity to spend')
+            COMMENT = 'Average spending propensity score (0-1, higher = more likely to spend). Inverse of price sensitivity.',
+        GUESTS.GUEST_COUNT AS COUNT(DISTINCT guest_360_id) COMMENT = 'Number of guests',
+        GUESTS.TOTAL_BOOKINGS AS SUM(total_bookings) COMMENT = 'Total number of bookings',
+        GUESTS.TOTAL_LIFETIME_VALUE AS SUM(lifetime_value) COMMENT = 'Total lifetime value',
+        GUESTS.TOTAL_ONBOARD_SPEND_SUM AS SUM(total_onboard_spend)
+            WITH SYNONYMS = ('total_onboard_spend')
+            COMMENT = 'Sum of total onboard spend across guests',
+        -- Booking metrics
+        GUEST_BOOKINGS.BOOKING_COUNT AS COUNT(DISTINCT booking_id) COMMENT = 'Number of bookings',
+        GUEST_BOOKINGS.AVG_CABIN_PRICE AS AVG(offered_price) COMMENT = 'Average cabin price',
+        GUEST_BOOKINGS.TOTAL_CABIN_REVENUE_SUM AS SUM(total_cabin_revenue) COMMENT = 'Total cabin revenue',
+        GUEST_BOOKINGS.UNIQUE_BOOKING_GUESTS AS COUNT(DISTINCT guest_360_id) COMMENT = 'Number of unique guests with bookings',
+        GUEST_BOOKINGS.AVG_DAYS_BEFORE_SAILING AS AVG(days_before_sailing) COMMENT = 'Average days between booking and sailing',
+        -- Flight metrics
+        GUEST_FLIGHTS.AVG_TICKET_PRICE AS AVG(ticket_price) COMMENT = 'Average flight ticket price',
+        GUEST_FLIGHTS.FLIGHT_COUNT AS COUNT(DISTINCT flight_id) COMMENT = 'Number of flights',
+        GUEST_FLIGHTS.TOTAL_TICKET_REVENUE AS SUM(ticket_price) COMMENT = 'Total flight ticket revenue',
+        GUEST_FLIGHTS.UNIQUE_FLIGHT_GUESTS AS COUNT(DISTINCT guest_360_id) COMMENT = 'Number of unique guests with flights',
+        -- Service metrics
+        GUEST_SERVICES.AVG_SERVICE_AMOUNT AS AVG(amount) COMMENT = 'Average service transaction amount',
+        GUEST_SERVICES.SERVICE_TRANSACTION_COUNT AS COUNT(DISTINCT service_id) COMMENT = 'Number of service transactions',
+        GUEST_SERVICES.TOTAL_SERVICE_REVENUE AS SUM(amount) COMMENT = 'Total service revenue',
+        GUEST_SERVICES.UNIQUE_SERVICE_GUESTS AS COUNT(DISTINCT guest_360_id) COMMENT = 'Number of unique guests using services',
+        -- Feedback metrics
+        GUEST_FEEDBACK.AVG_OVERALL_RATING AS AVG(overall_rating) COMMENT = 'Average overall cruise rating',
+        GUEST_FEEDBACK.AVG_CATEGORY_RATING AS AVG(category_rating) COMMENT = 'Average rating for feedback category',
+        GUEST_FEEDBACK.FEEDBACK_COUNT AS COUNT(*) COMMENT = 'Number of feedback records',
+        GUEST_FEEDBACK.POSITIVE_FEEDBACK_COUNT AS COUNT(CASE WHEN sentiment = 'Positive' THEN 1 END) COMMENT = 'Number of positive feedback records',
+        GUEST_FEEDBACK.RECOMMENDATION_RATE AS AVG(CASE WHEN would_recommend THEN 1.0 ELSE 0.0 END) * 100 COMMENT = 'Percentage of guests who would recommend',
+        GUEST_FEEDBACK.UNIQUE_FEEDBACK_GUESTS AS COUNT(DISTINCT guest_360_id) COMMENT = 'Number of unique guests providing feedback'
+    )
+    COMMENT = 'Unified guest profiles with lifetime value, spending patterns, loyalty information, value segmentation, service transactions, flight/travel data, and cruise booking details for comprehensive customer intelligence and personalization.'
+    WITH EXTENSION (CA='{"tables":[{"name":"GUESTS","dimensions":[{"name":"GUEST_360_ID","unique":true},{"name":"GUEST_NAME"},{"name":"GUEST_SEGMENT","sample_values":{{SAMPLE_SEGMENTS_JSON}}},{"name":"LOYALTY_TIER","sample_values":{{SAMPLE_TIERS_JSON}}},{"name":"PREFERRED_CABIN_CLASS","sample_values":{{SAMPLE_CABINS_JSON}}},{"name":"PREFERRED_REGION"},{"name":"VALUE_SEGMENT","sample_values":["VIP","High Value","Growing","Developing","New","Prospect"]}],"facts":[{"name":"TOTAL_ONBOARD_SPEND"},{"name":"PRICE_SENSITIVITY"}],"metrics":[{"name":"AVG_LIFETIME_VALUE"},{"name":"AVG_ONBOARD_SPEND"},{"name":"AVG_PRICE_SENSITIVITY"},{"name":"AVG_SPENDING_PROPENSITY_SCORE"},{"name":"GUEST_COUNT"},{"name":"TOTAL_BOOKINGS"},{"name":"TOTAL_LIFETIME_VALUE"},{"name":"TOTAL_ONBOARD_SPEND_SUM"}],"time_dimensions":[{"name":"LAST_BOOKING_DATE"},{"name":"MEMBER_SINCE"}]},{"name":"GUEST_BOOKINGS","dimensions":[{"name":"BOOKING_ID"},{"name":"GUEST_360_ID"},{"name":"SAILING_ID"},{"name":"SHIP_NAME","sample_values":{{SAMPLE_SHIPS_JSON}}},{"name":"SHIP_CLASS","sample_values":{{SAMPLE_CLASSES_JSON}}},{"name":"ITINERARY_REGION","sample_values":{{SAMPLE_REGIONS_JSON}}},{"name":"DEPARTURE_PORT","sample_values":{{SAMPLE_PORTS_JSON}}},{"name":"CABIN_CLASS","sample_values":{{SAMPLE_CABINS_JSON}}},{"name":"BOOKING_STATUS","sample_values":["Confirmed","Cancelled","Abandoned"]},{"name":"BOOKING_CHANNEL","sample_values":["Website","Mobile App","Travel Agent","Phone"]},{"name":"SAILING_STATUS","sample_values":["UPCOMING","PAST"]}],"facts":[{"name":"DURATION_NIGHTS"},{"name":"NUM_GUESTS"},{"name":"BASE_PRICE"},{"name":"OFFERED_PRICE"},{"name":"TOTAL_CABIN_REVENUE"},{"name":"DAYS_BEFORE_SAILING"}],"metrics":[{"name":"BOOKING_COUNT"},{"name":"AVG_CABIN_PRICE"},{"name":"TOTAL_CABIN_REVENUE_SUM"},{"name":"UNIQUE_BOOKING_GUESTS"},{"name":"AVG_DAYS_BEFORE_SAILING"}],"time_dimensions":[{"name":"SAILING_DATE"},{"name":"BOOKING_DATE"}]},{"name":"GUEST_FLIGHTS","dimensions":[{"name":"FLIGHT_ID"},{"name":"GUEST_360_ID"},{"name":"BOOKING_ID"},{"name":"AIRLINE"},{"name":"FLIGHT_NUMBER"},{"name":"ORIGIN_AIRPORT"},{"name":"ORIGIN_CITY"},{"name":"DESTINATION_AIRPORT"},{"name":"DESTINATION_CITY"},{"name":"FLIGHT_TYPE"},{"name":"BOOKING_SOURCE"}],"metrics":[{"name":"AVG_TICKET_PRICE"},{"name":"FLIGHT_COUNT"},{"name":"TOTAL_TICKET_REVENUE"},{"name":"UNIQUE_FLIGHT_GUESTS"}],"time_dimensions":[{"name":"FLIGHT_DATE"}]},{"name":"GUEST_SERVICES","dimensions":[{"name":"SERVICE_ID"},{"name":"GUEST_360_ID"},{"name":"SERVICE_CATEGORY"},{"name":"SERVICE_NAME"},{"name":"SAILING_ID"},{"name":"PURCHASE_CHANNEL"}],"metrics":[{"name":"AVG_SERVICE_AMOUNT"},{"name":"SERVICE_TRANSACTION_COUNT"},{"name":"TOTAL_SERVICE_REVENUE"},{"name":"UNIQUE_SERVICE_GUESTS"}],"time_dimensions":[{"name":"SERVICE_DATE"}]},{"name":"GUEST_FEEDBACK","dimensions":[{"name":"FEEDBACK_ID"},{"name":"GUEST_360_ID"},{"name":"BOOKING_ID"},{"name":"SAILING_ID"},{"name":"SHIP_NAME"},{"name":"FEEDBACK_CATEGORY"},{"name":"FEEDBACK_SUBCATEGORY"},{"name":"SENTIMENT","sample_values":["Positive","Neutral","Negative"]},{"name":"FEEDBACK_TEXT"},{"name":"MENTIONED_AMENITIES"},{"name":"MENTIONED_EXCURSIONS"},{"name":"WOULD_RECOMMEND"}],"facts":[{"name":"OVERALL_RATING"},{"name":"CATEGORY_RATING"}],"metrics":[{"name":"AVG_OVERALL_RATING"},{"name":"AVG_CATEGORY_RATING"},{"name":"FEEDBACK_COUNT"},{"name":"POSITIVE_FEEDBACK_COUNT"},{"name":"RECOMMENDATION_RATE"},{"name":"UNIQUE_FEEDBACK_GUESTS"}],"time_dimensions":[{"name":"FEEDBACK_DATE"}]}],"verified_queries":[{"name":"guest_value_segments","sql":"SELECT value_segment,\\n       COUNT(DISTINCT guest_360_id) as guest_count,\\n       ROUND(AVG(lifetime_value), 2) as avg_ltv,\\n       ROUND(AVG(total_onboard_spend), 2) as avg_onboard_spend\\nFROM __GUESTS\\nGROUP BY value_segment\\nORDER BY avg_ltv DESC\\n","question":"How are guests distributed across value segments?","use_as_onboarding_question":true},{"name":"loyalty_tier_overview","sql":"SELECT loyalty_tier,\\n       COUNT(DISTINCT guest_360_id) as guest_count,\\n       ROUND(AVG(lifetime_value), 2) as avg_ltv,\\n       ROUND(AVG(total_onboard_spend), 2) as avg_onboard_spend,\\n       ROUND(AVG(price_sensitivity), 3) as avg_price_sensitivity\\nFROM __GUESTS\\nGROUP BY loyalty_tier\\nORDER BY avg_ltv DESC\\n","question":"What is the breakdown of guests by loyalty tier?","use_as_onboarding_question":true},{"name":"top_spenders","sql":"SELECT guest_360_id, guest_name, loyalty_tier, value_segment,\\n       ROUND(lifetime_value, 2) as lifetime_value,\\n       ROUND(total_onboard_spend, 2) as total_onboard_spend,\\n       total_bookings\\nFROM __GUESTS\\nORDER BY lifetime_value DESC\\nLIMIT 20\\n","question":"Who are the top spending guests?","use_as_onboarding_question":true},{"name":"cabin_class_preferences","sql":"SELECT preferred_cabin_class,\\n       COUNT(DISTINCT guest_360_id) as guest_count,\\n       ROUND(AVG(lifetime_value), 2) as avg_ltv,\\n       ROUND(AVG(price_sensitivity), 3) as avg_price_sensitivity\\nFROM __GUESTS\\nGROUP BY preferred_cabin_class\\nORDER BY avg_ltv DESC\\n","question":"What are the cabin class preferences and their associated guest values?","use_as_onboarding_question":false}]}');
