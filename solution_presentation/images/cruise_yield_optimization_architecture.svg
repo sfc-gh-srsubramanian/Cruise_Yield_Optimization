@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" font-family="Inter, Arial, sans-serif">
+  <defs>
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+    <!-- Glow for arrows -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Snowflake platform gradient -->
+    <linearGradient id="platformGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a7fa8"/>
+      <stop offset="50%" stop-color="#29B5E8"/>
+      <stop offset="100%" stop-color="#1a7fa8"/>
+    </linearGradient>
+    <!-- Card gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#192235"/>
+    </linearGradient>
+    <!-- Source card gradient -->
+    <linearGradient id="sourceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#172033"/>
+    </linearGradient>
+    <!-- Arrow marker -->
+    <marker id="arrowHead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#29B5E8" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#0f172a" rx="0"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="100" x2="1200" y2="100" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="500" x2="1200" y2="500" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="600" x2="1200" y2="600" stroke="#fff" stroke-width="0.5"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- TITLE -->
+  <!-- ============================================ -->
+  <text x="600" y="38" text-anchor="middle" fill="#f1f5f9" font-size="18" font-weight="700" letter-spacing="0.5">Cruise Yield Optimization — Solution Architecture</text>
+  <line x1="380" y1="48" x2="820" y2="48" stroke="#29B5E8" stroke-width="2" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- LEFT SECTION: Data Sources -->
+  <!-- ============================================ -->
+  <text x="82" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1.5" text-transform="uppercase">DATA SOURCES</text>
+
+  <!-- Source 1: Booking Systems -->
+  <g filter="url(#shadow)">
+    <rect x="18" y="100" width="128" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Calendar icon -->
+    <g transform="translate(64, 128)">
+      <rect x="-12" y="-10" width="24" height="22" rx="3" fill="none" stroke="#29B5E8" stroke-width="1.5"/>
+      <line x1="-6" y1="-13" x2="-6" y2="-7" stroke="#29B5E8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="6" y1="-13" x2="6" y2="-7" stroke="#29B5E8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-12" y1="-3" x2="12" y2="-3" stroke="#29B5E8" stroke-width="1"/>
+      <rect x="-7" y="1" width="4" height="3" rx="0.5" fill="#29B5E8" opacity="0.6"/>
+      <rect x="-1" y="1" width="4" height="3" rx="0.5" fill="#29B5E8" opacity="0.6"/>
+      <rect x="5" y="1" width="4" height="3" rx="0.5" fill="#29B5E8" opacity="0.4"/>
+      <rect x="-7" y="6" width="4" height="3" rx="0.5" fill="#29B5E8" opacity="0.4"/>
+    </g>
+    <text x="82" y="165" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Booking</text>
+    <text x="82" y="180" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Systems</text>
+    <text x="82" y="205" text-anchor="middle" fill="#94a3b8" font-size="8">Reservations &amp; Fares</text>
+  </g>
+
+  <!-- Source 2: Guest Profiles & Loyalty -->
+  <g filter="url(#shadow)">
+    <rect x="18" y="235" width="128" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Person icon -->
+    <g transform="translate(64, 263)">
+      <circle cx="0" cy="-6" r="7" fill="none" stroke="#30D158" stroke-width="1.5"/>
+      <path d="M-12,12 C-12,4 -7,0 0,0 C7,0 12,4 12,12" fill="none" stroke="#30D158" stroke-width="1.5"/>
+    </g>
+    <text x="82" y="300" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Guest Profiles</text>
+    <text x="82" y="315" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">&amp; Loyalty</text>
+    <text x="82" y="340" text-anchor="middle" fill="#94a3b8" font-size="8">Demographics &amp; Tiers</text>
+  </g>
+
+  <!-- Source 3: Airline Partners -->
+  <g filter="url(#shadow)">
+    <rect x="18" y="370" width="128" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Plane icon -->
+    <g transform="translate(64, 398)">
+      <path d="M-14,2 L-4,-4 L2,-6 L14,-10 L14,-6 L4,-2 L6,6 L10,10 L8,12 L2,8 L-2,6 L-8,10 L-10,8 L-6,4 L-14,2Z" fill="none" stroke="#F39C12" stroke-width="1.3" stroke-linejoin="round"/>
+    </g>
+    <text x="82" y="435" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Airline</text>
+    <text x="82" y="450" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Partners</text>
+    <text x="82" y="475" text-anchor="middle" fill="#94a3b8" font-size="8">Flights &amp; Packages</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- ARROW 1: Data Sources -> RAW -->
+  <!-- ============================================ -->
+  <line x1="152" y1="295" x2="198" y2="295" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrowHead)" filter="url(#glow)" opacity="0.7"/>
+  <text x="175" y="282" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">Continuous</text>
+  <text x="175" y="291" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">Ingestion</text>
+
+  <!-- ============================================ -->
+  <!-- CENTER-LEFT: RAW (Bronze) -->
+  <!-- ============================================ -->
+  <g filter="url(#shadow)">
+    <rect x="204" y="88" width="168" height="430" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Header bar -->
+    <rect x="204" y="88" width="168" height="40" rx="12" fill="#29B5E8" opacity="0.12"/>
+    <rect x="204" y="116" width="168" height="12" fill="url(#cardGrad)"/>
+    <text x="288" y="113" text-anchor="middle" fill="#29B5E8" font-size="13" font-weight="700">RAW (Bronze)</text>
+    <!-- Stats -->
+    <text x="288" y="142" text-anchor="middle" fill="#f1f5f9" font-size="10" font-weight="600">8 Tables · 8.8M+ rows</text>
+    <line x1="222" y1="152" x2="354" y2="152" stroke="#334155" stroke-width="0.5"/>
+    <!-- Table list -->
+    <g fill="#94a3b8" font-size="10">
+      <circle cx="226" cy="172" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="175">Sailings</text>
+      <circle cx="226" cy="198" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="201">Guests</text>
+      <circle cx="226" cy="224" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="227">Bookings</text>
+      <circle cx="226" cy="250" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="253">Spending</text>
+      <circle cx="226" cy="276" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="279">Purchases</text>
+      <circle cx="226" cy="302" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="305">Pricing</text>
+      <circle cx="226" cy="328" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="331">Signals</text>
+      <circle cx="226" cy="354" r="2.5" fill="#29B5E8" opacity="0.5"/>
+      <text x="236" y="357">Feedback</text>
+    </g>
+    <!-- Bronze badge -->
+    <rect x="244" y="480" width="88" height="22" rx="11" fill="#CD7F32" opacity="0.15" stroke="#CD7F32" stroke-width="0.5" stroke-opacity="0.3"/>
+    <text x="288" y="495" text-anchor="middle" fill="#CD7F32" font-size="9" font-weight="600">BRONZE LAYER</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- ARROW 2: RAW -> CURATED -->
+  <!-- ============================================ -->
+  <line x1="378" y1="295" x2="424" y2="295" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrowHead)" filter="url(#glow)" opacity="0.7"/>
+  <text x="401" y="282" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">Transform</text>
+  <text x="401" y="291" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">&amp; Enrich</text>
+
+  <!-- ============================================ -->
+  <!-- CENTER: CURATED (Silver) -->
+  <!-- ============================================ -->
+  <g filter="url(#shadow)">
+    <rect x="430" y="88" width="178" height="430" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Header bar -->
+    <rect x="430" y="88" width="178" height="40" rx="12" fill="#30D158" opacity="0.1"/>
+    <rect x="430" y="116" width="178" height="12" fill="url(#cardGrad)"/>
+    <text x="519" y="113" text-anchor="middle" fill="#30D158" font-size="13" font-weight="700">CURATED (Silver)</text>
+    <!-- Curated items -->
+    <line x1="448" y1="135" x2="590" y2="135" stroke="#334155" stroke-width="0.5"/>
+    <!-- Item 1: Guest 360 -->
+    <rect x="448" y="150" width="142" height="52" rx="8" fill="#30D158" opacity="0.06" stroke="#30D158" stroke-width="0.5" stroke-opacity="0.2"/>
+    <text x="519" y="172" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Guest 360 View</text>
+    <text x="519" y="190" text-anchor="middle" fill="#94a3b8" font-size="8">Unified guest profiles</text>
+    <!-- Item 2: Guest Bookings -->
+    <rect x="448" y="214" width="142" height="52" rx="8" fill="#30D158" opacity="0.06" stroke="#30D158" stroke-width="0.5" stroke-opacity="0.2"/>
+    <text x="519" y="236" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Guest Bookings</text>
+    <text x="519" y="254" text-anchor="middle" fill="#94a3b8" font-size="8">Enriched reservation data</text>
+    <!-- Item 3: Guest Flights & Services -->
+    <rect x="448" y="278" width="142" height="52" rx="8" fill="#30D158" opacity="0.06" stroke="#30D158" stroke-width="0.5" stroke-opacity="0.2"/>
+    <text x="519" y="296" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Flights &amp; Services</text>
+    <text x="519" y="314" text-anchor="middle" fill="#94a3b8" font-size="8">Guest ancillary packages</text>
+    <!-- Item 4: Value Segmentation -->
+    <rect x="448" y="342" width="142" height="65" rx="8" fill="#30D158" opacity="0.06" stroke="#30D158" stroke-width="0.5" stroke-opacity="0.2"/>
+    <text x="519" y="364" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Value Segmentation</text>
+    <!-- 6 segment dots -->
+    <g transform="translate(475, 380)">
+      <circle cx="0" cy="0" r="4" fill="#e74c3c" opacity="0.7"/><text x="8" y="3.5" fill="#94a3b8" font-size="7">6 segments</text>
+      <circle cx="54" cy="0" r="4" fill="#F39C12" opacity="0.7"/>
+      <circle cx="66" cy="0" r="4" fill="#30D158" opacity="0.7"/>
+      <circle cx="78" cy="0" r="4" fill="#29B5E8" opacity="0.7"/>
+    </g>
+    <!-- Silver badge -->
+    <rect x="475" y="480" width="88" height="22" rx="11" fill="#C0C0C0" opacity="0.15" stroke="#C0C0C0" stroke-width="0.5" stroke-opacity="0.3"/>
+    <text x="519" y="495" text-anchor="middle" fill="#C0C0C0" font-size="9" font-weight="600">SILVER LAYER</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- ARROW 3: CURATED -> ANALYTICS/ML -->
+  <!-- ============================================ -->
+  <line x1="614" y1="295" x2="660" y2="295" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrowHead)" filter="url(#glow)" opacity="0.7"/>
+  <text x="637" y="282" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">Analyze</text>
+  <text x="637" y="291" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">&amp; Predict</text>
+
+  <!-- ============================================ -->
+  <!-- CENTER-RIGHT TOP: ANALYTICS (Gold) -->
+  <!-- ============================================ -->
+  <g filter="url(#shadow)">
+    <rect x="666" y="88" width="192" height="216" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Header bar -->
+    <rect x="666" y="88" width="192" height="40" rx="12" fill="#F39C12" opacity="0.1"/>
+    <rect x="666" y="116" width="192" height="12" fill="url(#cardGrad)"/>
+    <text x="762" y="113" text-anchor="middle" fill="#F39C12" font-size="13" font-weight="700">ANALYTICS (Gold)</text>
+    <line x1="684" y1="135" x2="840" y2="135" stroke="#334155" stroke-width="0.5"/>
+    <!-- Metrics -->
+    <g fill="#94a3b8" font-size="9.5">
+      <rect x="680" y="146" width="164" height="30" rx="6" fill="#F39C12" opacity="0.05" stroke="#F39C12" stroke-width="0.4" stroke-opacity="0.2"/>
+      <text x="692" y="164" fill="#f1f5f9" font-weight="600" font-size="10">V_SAILING_YIELD</text>
+      <text x="692" y="180" fill="#94a3b8" font-size="8">Net Yield / APCD</text>
+
+      <rect x="680" y="190" width="164" height="30" rx="6" fill="#F39C12" opacity="0.05" stroke="#F39C12" stroke-width="0.4" stroke-opacity="0.2"/>
+      <text x="692" y="208" fill="#f1f5f9" font-weight="600" font-size="10">V_PRICING_PERFORMANCE</text>
+      <text x="692" y="224" fill="#94a3b8" font-size="8">Price elasticity metrics</text>
+    </g>
+    <!-- Semantic views badge -->
+    <rect x="694" y="270" width="136" height="22" rx="11" fill="#F39C12" opacity="0.12" stroke="#F39C12" stroke-width="0.5" stroke-opacity="0.3"/>
+    <text x="762" y="285" text-anchor="middle" fill="#F39C12" font-size="9" font-weight="600">8 Semantic Views</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- CENTER-RIGHT BOTTOM: ML -->
+  <!-- ============================================ -->
+  <g filter="url(#shadow)">
+    <rect x="666" y="318" width="192" height="200" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Header bar -->
+    <rect x="666" y="318" width="192" height="40" rx="12" fill="#a855f7" opacity="0.1"/>
+    <rect x="666" y="346" width="192" height="12" fill="url(#cardGrad)"/>
+    <text x="762" y="343" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="700">ML Models</text>
+    <line x1="684" y1="365" x2="840" y2="365" stroke="#334155" stroke-width="0.5"/>
+    <!-- ML Functions -->
+    <g font-size="9.5">
+      <rect x="680" y="375" width="164" height="26" rx="6" fill="#a855f7" opacity="0.05" stroke="#a855f7" stroke-width="0.4" stroke-opacity="0.2"/>
+      <text x="692" y="392" fill="#f1f5f9" font-weight="600" font-size="9">PREDICT_CONVERSION_PROB</text>
+
+      <rect x="680" y="409" width="164" height="26" rx="6" fill="#a855f7" opacity="0.05" stroke="#a855f7" stroke-width="0.4" stroke-opacity="0.2"/>
+      <text x="692" y="426" fill="#f1f5f9" font-weight="600" font-size="9">GET_OPTIMAL_PRICE</text>
+
+      <rect x="680" y="443" width="164" height="26" rx="6" fill="#a855f7" opacity="0.05" stroke="#a855f7" stroke-width="0.4" stroke-opacity="0.2"/>
+      <text x="692" y="460" fill="#f1f5f9" font-weight="600" font-size="9">SCENARIO_ANALYSIS</text>
+    </g>
+    <!-- ML badge -->
+    <rect x="718" y="484" width="88" height="22" rx="11" fill="#a855f7" opacity="0.12" stroke="#a855f7" stroke-width="0.5" stroke-opacity="0.3"/>
+    <text x="762" y="499" text-anchor="middle" fill="#a855f7" font-size="9" font-weight="600">CORTEX ML</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- ARROW 4: ANALYTICS/ML -> Consumers -->
+  <!-- ============================================ -->
+  <line x1="864" y1="295" x2="910" y2="295" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrowHead)" filter="url(#glow)" opacity="0.7"/>
+  <text x="887" y="282" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">Query</text>
+  <text x="887" y="291" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="500">&amp; Act</text>
+
+  <!-- ============================================ -->
+  <!-- RIGHT SECTION: Consumers -->
+  <!-- ============================================ -->
+  <text x="1020" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1.5">CONSUMERS</text>
+
+  <!-- Consumer 1: Revenue Managers -->
+  <g filter="url(#shadow)">
+    <rect x="916" y="100" width="168" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Chart icon -->
+    <g transform="translate(1000, 130)">
+      <rect x="-16" y="-2" width="6" height="14" rx="1.5" fill="#29B5E8" opacity="0.6"/>
+      <rect x="-7" y="-10" width="6" height="22" rx="1.5" fill="#29B5E8" opacity="0.8"/>
+      <rect x="2" y="-6" width="6" height="18" rx="1.5" fill="#29B5E8" opacity="0.7"/>
+      <rect x="11" y="-14" width="6" height="26" rx="1.5" fill="#29B5E8"/>
+    </g>
+    <text x="1000" y="165" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Revenue Managers</text>
+    <line x1="940" y1="175" x2="1060" y2="175" stroke="#334155" stroke-width="0.5"/>
+    <text x="1000" y="192" text-anchor="middle" fill="#29B5E8" font-size="8.5" font-weight="500">Cortex Analyst</text>
+    <text x="1000" y="205" text-anchor="middle" fill="#94a3b8" font-size="8">Natural Language Queries</text>
+  </g>
+
+  <!-- Consumer 2: Pricing Analysts -->
+  <g filter="url(#shadow)">
+    <rect x="916" y="235" width="168" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Sliders icon -->
+    <g transform="translate(1000, 265)">
+      <line x1="-14" y1="-8" x2="14" y2="-8" stroke="#30D158" stroke-width="1.5"/>
+      <circle cx="-4" cy="-8" r="3.5" fill="#1e293b" stroke="#30D158" stroke-width="1.5"/>
+      <line x1="-14" y1="0" x2="14" y2="0" stroke="#30D158" stroke-width="1.5"/>
+      <circle cx="6" cy="0" r="3.5" fill="#1e293b" stroke="#30D158" stroke-width="1.5"/>
+      <line x1="-14" y1="8" x2="14" y2="8" stroke="#30D158" stroke-width="1.5"/>
+      <circle cx="-1" cy="8" r="3.5" fill="#1e293b" stroke="#30D158" stroke-width="1.5"/>
+    </g>
+    <text x="1000" y="300" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Pricing Analysts</text>
+    <line x1="940" y1="310" x2="1060" y2="310" stroke="#334155" stroke-width="0.5"/>
+    <text x="1000" y="327" text-anchor="middle" fill="#30D158" font-size="8.5" font-weight="500">What-If Scenarios</text>
+    <text x="1000" y="340" text-anchor="middle" fill="#94a3b8" font-size="8">Dynamic Price Optimization</text>
+  </g>
+
+  <!-- Consumer 3: Partner Intelligence -->
+  <g filter="url(#shadow)">
+    <rect x="916" y="370" width="168" height="120" rx="12" fill="url(#sourceGrad)" stroke="#334155" stroke-width="1"/>
+    <!-- Shield/Lock icon for clean room -->
+    <g transform="translate(1000, 398)">
+      <rect x="-10" y="-4" width="20" height="16" rx="3" fill="none" stroke="#F39C12" stroke-width="1.5"/>
+      <path d="M-6,-4 L-6,-8 C-6,-14 6,-14 6,-8 L6,-4" fill="none" stroke="#F39C12" stroke-width="1.5"/>
+      <circle cx="0" cy="4" r="2.5" fill="#F39C12" opacity="0.6"/>
+      <line x1="0" y1="6" x2="0" y2="9" stroke="#F39C12" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="1000" y="435" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="600">Partner Intelligence</text>
+    <line x1="940" y1="445" x2="1060" y2="445" stroke="#334155" stroke-width="0.5"/>
+    <text x="1000" y="462" text-anchor="middle" fill="#F39C12" font-size="8.5" font-weight="500">Clean Room Signals</text>
+    <text x="1000" y="475" text-anchor="middle" fill="#94a3b8" font-size="8">Secure Data Collaboration</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- BOTTOM: Snowflake Platform Bar -->
+  <!-- ============================================ -->
+  <g filter="url(#shadow)">
+    <rect x="18" y="550" width="1164" height="52" rx="12" fill="url(#platformGrad)" opacity="0.15" stroke="#29B5E8" stroke-width="1" stroke-opacity="0.3"/>
+    <!-- Snowflake icon (simplified) -->
+    <g transform="translate(530, 576)" fill="#29B5E8" opacity="0.7">
+      <line x1="0" y1="-10" x2="0" y2="10" stroke="#29B5E8" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-8.66" y1="-5" x2="8.66" y2="5" stroke="#29B5E8" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-8.66" y1="5" x2="8.66" y2="-5" stroke="#29B5E8" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="0" cy="-10" r="2" fill="#29B5E8"/>
+      <circle cx="0" cy="10" r="2" fill="#29B5E8"/>
+      <circle cx="-8.66" cy="-5" r="2" fill="#29B5E8"/>
+      <circle cx="8.66" cy="5" r="2" fill="#29B5E8"/>
+      <circle cx="-8.66" cy="5" r="2" fill="#29B5E8"/>
+      <circle cx="8.66" cy="-5" r="2" fill="#29B5E8"/>
+    </g>
+    <text x="600" y="580" text-anchor="middle" fill="#29B5E8" font-size="14" font-weight="700" letter-spacing="3">SNOWFLAKE PLATFORM</text>
+    <!-- Subtitles -->
+    <text x="600" y="596" text-anchor="middle" fill="#94a3b8" font-size="8" letter-spacing="1">Snowpark  |  Cortex AI  |  Dynamic Tables  |  Clean Rooms  |  Semantic Views</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- Flow direction indicators (decorative) -->
+  <!-- ============================================ -->
+  <!-- Dashed connection lines from sources to RAW -->
+  <line x1="146" y1="160" x2="204" y2="175" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.3"/>
+  <line x1="146" y1="295" x2="204" y2="295" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.3"/>
+  <line x1="146" y1="430" x2="204" y2="415" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.3"/>
+
+  <!-- Dashed lines from consumers to platform -->
+  <line x1="1000" y1="490" x2="1000" y2="550" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.2"/>
+  <line x1="288" y1="518" x2="288" y2="550" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.2"/>
+  <line x1="519" y1="518" x2="519" y2="550" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.2"/>
+  <line x1="762" y1="518" x2="762" y2="550" stroke="#29B5E8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.2"/>
+
+  <!-- ============================================ -->
+  <!-- Footer -->
+  <!-- ============================================ -->
+  <text x="600" y="640" text-anchor="middle" fill="#475569" font-size="8" letter-spacing="0.5">Cruise Yield Optimization  |  Snowflake Solution Architecture  |  End-to-End Data Flow</text>
+
+  <!-- Version tag -->
+  <rect x="1090" y="660" width="90" height="18" rx="9" fill="#1e293b" stroke="#334155" stroke-width="0.5"/>
+  <text x="1135" y="673" text-anchor="middle" fill="#475569" font-size="7">v1.0 — 2026</text>
+</svg>

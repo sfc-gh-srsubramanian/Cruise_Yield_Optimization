@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <filter id="shadowSm" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <linearGradient id="barGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF6B6B" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#F39C12" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FF6B6B" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="600" y="58" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#f1f5f9">The Cost of Inaction: Revenue Leakage in Cruise Yield Management</text>
+  <line x1="440" y1="72" x2="760" y2="72" stroke="#29B5E8" stroke-width="2" stroke-opacity="0.5"/>
+
+  <!-- Card 1: $2.8B -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="110" width="360" height="310" rx="12" fill="#1e293b"/>
+    <rect x="40" y="110" width="360" height="6" rx="3" fill="#FF6B6B"/>
+  </g>
+  <!-- Icon: dollar sign in circle -->
+  <circle cx="220" cy="165" r="22" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-opacity="0.4"/>
+  <text x="220" y="173" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#FF6B6B">$</text>
+  <!-- Big number -->
+  <text x="220" y="250" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" fill="#FF6B6B">$2.8B</text>
+  <!-- Subtitle -->
+  <text x="220" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#f1f5f9">Annual Revenue Left on Table</text>
+  <!-- Divider -->
+  <line x1="90" y1="310" x2="350" y2="310" stroke="#334155" stroke-width="1"/>
+  <!-- Body -->
+  <text x="220" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">Suboptimal cabin pricing across</text>
+  <text x="220" y="362" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">the global cruise industry</text>
+
+  <!-- Card 2: 68% -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="110" width="360" height="310" rx="12" fill="#1e293b"/>
+    <rect x="420" y="110" width="360" height="6" rx="3" fill="#F39C12"/>
+  </g>
+  <!-- Icon: spreadsheet grid -->
+  <g transform="translate(600, 165)">
+    <rect x="-18" y="-18" width="36" height="36" rx="4" fill="none" stroke="#F39C12" stroke-width="2" stroke-opacity="0.4"/>
+    <line x1="-6" y1="-18" x2="-6" y2="18" stroke="#F39C12" stroke-width="1.5" stroke-opacity="0.4"/>
+    <line x1="6" y1="-18" x2="6" y2="18" stroke="#F39C12" stroke-width="1.5" stroke-opacity="0.4"/>
+    <line x1="-18" y1="-6" x2="18" y2="-6" stroke="#F39C12" stroke-width="1.5" stroke-opacity="0.4"/>
+    <line x1="-18" y1="6" x2="18" y2="6" stroke="#F39C12" stroke-width="1.5" stroke-opacity="0.4"/>
+  </g>
+  <!-- Big number -->
+  <text x="600" y="250" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" fill="#F39C12">68%</text>
+  <!-- Subtitle -->
+  <text x="600" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#f1f5f9">Still Use Spreadsheets</text>
+  <!-- Divider -->
+  <line x1="470" y1="310" x2="730" y2="310" stroke="#334155" stroke-width="1"/>
+  <!-- Body -->
+  <text x="600" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">Revenue managers relying on</text>
+  <text x="600" y="362" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">3–5 day update cycles</text>
+
+  <!-- Card 3: 15-22% -->
+  <g filter="url(#shadow)">
+    <rect x="800" y="110" width="360" height="310" rx="12" fill="#1e293b"/>
+    <rect x="800" y="110" width="360" height="6" rx="3" fill="#FF6B6B"/>
+  </g>
+  <!-- Icon: downward trend -->
+  <g transform="translate(980, 165)">
+    <polyline points="-18,-12 -4,-2 4,-10 18,8" fill="none" stroke="#FF6B6B" stroke-width="2.5" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="18,8 10,4 14,12" fill="#FF6B6B" fill-opacity="0.5"/>
+  </g>
+  <!-- Big number -->
+  <text x="980" y="250" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="66" font-weight="800" fill="#FF6B6B">15–22%</text>
+  <!-- Subtitle -->
+  <text x="980" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#f1f5f9">Inventory Below Optimal Price</text>
+  <!-- Divider -->
+  <line x1="850" y1="310" x2="1110" y2="310" stroke="#334155" stroke-width="1"/>
+  <!-- Body -->
+  <text x="980" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">Unable to factor real-time</text>
+  <text x="980" y="362" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#94a3b8">demand signals</text>
+
+  <!-- Bottom bar -->
+  <g filter="url(#shadowSm)">
+    <rect x="60" y="480" width="1080" height="100" rx="12" fill="#1e293b"/>
+  </g>
+  <!-- Bar fill background -->
+  <rect x="80" y="536" width="1040" height="24" rx="6" fill="#0f172a"/>
+  <!-- Gradient bar fill -->
+  <rect x="80" y="536" width="1040" height="24" rx="6" fill="url(#barGrad)" opacity="0.35"/>
+  <!-- Animated-style markers -->
+  <rect x="200" y="534" width="2" height="28" rx="1" fill="#FF6B6B" opacity="0.5"/>
+  <rect x="400" y="534" width="2" height="28" rx="1" fill="#F39C12" opacity="0.5"/>
+  <rect x="600" y="534" width="2" height="28" rx="1" fill="#F39C12" opacity="0.5"/>
+  <rect x="800" y="534" width="2" height="28" rx="1" fill="#F39C12" opacity="0.5"/>
+  <rect x="1000" y="534" width="2" height="28" rx="1" fill="#FF6B6B" opacity="0.5"/>
+  <!-- Range indicators -->
+  <text x="165" y="552" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FF6B6B">$340</text>
+  <text x="1035" y="552" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FF6B6B">$620</text>
+  <!-- Bar label -->
+  <text x="600" y="510" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">$340–$620 yield variance per passenger cruise day</text>
+  <text x="600" y="530" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">between top and bottom performers</text>
+
+  <!-- Bottom border accent -->
+  <rect x="0" y="694" width="1200" height="6" fill="#29B5E8" opacity="0.3"/>
+</svg>

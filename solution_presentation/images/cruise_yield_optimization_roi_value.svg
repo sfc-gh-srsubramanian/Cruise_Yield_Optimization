@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <filter id="shadowSm" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feFlood flood-color="#29B5E8" flood-opacity="0.15"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#f1f5f9">Business Value: Measurable ROI Across Four Drivers</text>
+  <line x1="420" y1="64" x2="780" y2="64" stroke="#29B5E8" stroke-width="2" stroke-opacity="0.5"/>
+
+  <!-- ===== CENTER CIRCLE ===== -->
+  <g filter="url(#glowBlue)">
+    <circle cx="600" cy="370" r="100" fill="#1e293b" stroke="#29B5E8" stroke-width="2.5"/>
+  </g>
+  <!-- Inner ring -->
+  <circle cx="600" cy="370" r="85" fill="none" stroke="#29B5E8" stroke-width="0.5" stroke-opacity="0.3"/>
+  <!-- Big value -->
+  <text x="600" y="360" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#29B5E8">$50–80M</text>
+  <!-- Subtitle -->
+  <text x="600" y="388" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">Annual Value for</text>
+  <text x="600" y="405" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">Mid-Size Fleet</text>
+
+  <!-- ===== CONNECTING LINES ===== -->
+  <!-- Top-left line -->
+  <line x1="515" y1="300" x2="290" y2="195" stroke="#29B5E8" stroke-width="1.5" stroke-opacity="0.3"/>
+  <circle cx="515" cy="300" r="3" fill="#29B5E8" opacity="0.5"/>
+  <!-- Top-right line -->
+  <line x1="685" y1="300" x2="910" y2="195" stroke="#30D158" stroke-width="1.5" stroke-opacity="0.3"/>
+  <circle cx="685" cy="300" r="3" fill="#30D158" opacity="0.5"/>
+  <!-- Bottom-left line -->
+  <line x1="515" y1="440" x2="290" y2="535" stroke="#F39C12" stroke-width="1.5" stroke-opacity="0.3"/>
+  <circle cx="515" cy="440" r="3" fill="#F39C12" opacity="0.5"/>
+  <!-- Bottom-right line -->
+  <line x1="685" y1="440" x2="910" y2="535" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.3"/>
+  <circle cx="685" cy="440" r="3" fill="#06b6d4" opacity="0.5"/>
+
+  <!-- ===== CARD 1: TOP-LEFT (Blue) ===== -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="100" width="340" height="180" rx="12" fill="#1e293b"/>
+    <rect x="50" y="100" width="5" height="180" rx="2.5" fill="#29B5E8"/>
+  </g>
+  <!-- Number badge -->
+  <circle cx="88" cy="130" r="14" fill="#29B5E8" fill-opacity="0.15"/>
+  <text x="88" y="135" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#29B5E8">1</text>
+  <!-- Content -->
+  <text x="220" y="155" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#29B5E8">+2.5–4%</text>
+  <text x="220" y="185" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">Net Yield per APCD</text>
+  <line x1="100" y1="202" x2="340" y2="202" stroke="#334155" stroke-width="1"/>
+  <text x="220" y="228" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">Unified yield across cabin +</text>
+  <text x="220" y="248" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">onboard + precruise</text>
+
+  <!-- ===== CARD 2: TOP-RIGHT (Green) ===== -->
+  <g filter="url(#shadow)">
+    <rect x="810" y="100" width="340" height="180" rx="12" fill="#1e293b"/>
+    <rect x="1145" y="100" width="5" height="180" rx="2.5" fill="#30D158"/>
+  </g>
+  <!-- Number badge -->
+  <circle cx="1112" cy="130" r="14" fill="#30D158" fill-opacity="0.15"/>
+  <text x="1112" y="135" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#30D158">2</text>
+  <!-- Content -->
+  <text x="980" y="155" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#30D158">+12–18%</text>
+  <text x="980" y="185" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">Booking Conversion</text>
+  <line x1="860" y1="202" x2="1100" y2="202" stroke="#334155" stroke-width="1"/>
+  <text x="980" y="228" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">ML-driven price optimization</text>
+  <text x="980" y="248" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">per segment</text>
+
+  <!-- ===== CARD 3: BOTTOM-LEFT (Warning) ===== -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="440" width="340" height="180" rx="12" fill="#1e293b"/>
+    <rect x="50" y="440" width="5" height="180" rx="2.5" fill="#F39C12"/>
+  </g>
+  <!-- Number badge -->
+  <circle cx="88" cy="470" r="14" fill="#F39C12" fill-opacity="0.15"/>
+  <text x="88" y="475" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#F39C12">3</text>
+  <!-- Content -->
+  <text x="220" y="498" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#F39C12">+8–15%</text>
+  <text x="220" y="528" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">Onboard Revenue</text>
+  <line x1="100" y1="545" x2="340" y2="545" stroke="#334155" stroke-width="1"/>
+  <text x="220" y="570" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">Guest 360 targeted</text>
+  <text x="220" y="590" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">upsell strategies</text>
+
+  <!-- ===== CARD 4: BOTTOM-RIGHT (Cyan) ===== -->
+  <g filter="url(#shadow)">
+    <rect x="810" y="440" width="340" height="180" rx="12" fill="#1e293b"/>
+    <rect x="1145" y="440" width="5" height="180" rx="2.5" fill="#06b6d4"/>
+  </g>
+  <!-- Number badge -->
+  <circle cx="1112" cy="470" r="14" fill="#06b6d4" fill-opacity="0.15"/>
+  <text x="1112" y="475" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#06b6d4">4</text>
+  <!-- Content -->
+  <text x="980" y="498" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#06b6d4">80% Faster</text>
+  <text x="980" y="528" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">Analytics Cycles</text>
+  <line x1="860" y1="545" x2="1100" y2="545" stroke="#334155" stroke-width="1"/>
+  <text x="980" y="570" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">Cortex Analyst natural</text>
+  <text x="980" y="590" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#94a3b8">language querying</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="694" width="1200" height="6" fill="#29B5E8" opacity="0.3"/>
+</svg>

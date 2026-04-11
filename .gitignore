@@ -1,6 +1,3 @@
-# Ignore solution presentation materials
-solution_presentation/
-
 # OS files
 .DS_Store
 */.DS_Store
