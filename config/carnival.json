@@ -1,0 +1,445 @@
+{
+  "cruise_line": "Carnival Cruise Line",
+  "cruise_line_short": "CCL",
+  "sample_ship_1": "Mardi Gras",
+  "sample_ship_2": "Carnival Vista",
+  "sample_ship_class_1": "Excel-class",
+  "sample_tier_top": "Diamond",
+  "sample_cabin_mid": "Balcony",
+  "sample_cabin_top": "Suite",
+  "loyalty_program": "Very Important Fun Person (VIFP)",
+  "loyalty_tiers": [
+    "Blue",
+    "Red",
+    "Gold",
+    "Platinum",
+    "Diamond"
+  ],
+  "loyalty_tier_high": [
+    "Diamond",
+    "Platinum"
+  ],
+  "loyalty_tier_mid": [
+    "Gold",
+    "Red"
+  ],
+  "ships": [
+    {
+      "name": "Mardi Gras",
+      "class": "Excel-class",
+      "capacity": 5282
+    },
+    {
+      "name": "Carnival Vista",
+      "class": "Vista-class",
+      "capacity": 3934
+    },
+    {
+      "name": "Carnival Horizon",
+      "class": "Vista-class",
+      "capacity": 3934
+    },
+    {
+      "name": "Carnival Panorama",
+      "class": "Vista-class",
+      "capacity": 3934
+    },
+    {
+      "name": "Carnival Sunrise",
+      "class": "Sunshine-class",
+      "capacity": 2974
+    },
+    {
+      "name": "Carnival Radiance",
+      "class": "Sunshine-class",
+      "capacity": 2974
+    },
+    {
+      "name": "Carnival Glory",
+      "class": "Conquest-class",
+      "capacity": 2986
+    },
+    {
+      "name": "Carnival Liberty",
+      "class": "Conquest-class",
+      "capacity": 2986
+    },
+    {
+      "name": "Carnival Freedom",
+      "class": "Conquest-class",
+      "capacity": 2986
+    },
+    {
+      "name": "Carnival Valor",
+      "class": "Conquest-class",
+      "capacity": 2986
+    }
+  ],
+  "cabin_classes": [
+    "Interior",
+    "Oceanview",
+    "Balcony",
+    "Suite",
+    "Haven"
+  ],
+  "base_prices": [
+    800,
+    1200,
+    1800,
+    2500,
+    3500
+  ],
+  "regions": [
+    "Bahamas",
+    "Caribbean",
+    "Mexico",
+    "Alaska",
+    "Europe",
+    "Panama Canal"
+  ],
+  "ports": [
+    {
+      "port": "Miami",
+      "airport": "MIA"
+    },
+    {
+      "port": "Fort Lauderdale",
+      "airport": "FLL"
+    },
+    {
+      "port": "Galveston",
+      "airport": "IAH"
+    },
+    {
+      "port": "New Orleans",
+      "airport": "MSY"
+    },
+    {
+      "port": "Port Canaveral",
+      "airport": "MCO"
+    },
+    {
+      "port": "Tampa",
+      "airport": "TPA"
+    },
+    {
+      "port": "San Juan",
+      "airport": "SJU"
+    },
+    {
+      "port": "Nassau",
+      "airport": "NAS"
+    },
+    {
+      "port": "Cozumel",
+      "airport": "CZM"
+    },
+    {
+      "port": "Grand Cayman",
+      "airport": "GCM"
+    },
+    {
+      "port": "Falmouth",
+      "airport": "MBJ"
+    },
+    {
+      "port": "Amber Cove",
+      "airport": "POP"
+    },
+    {
+      "port": "La Romana",
+      "airport": "LRM"
+    },
+    {
+      "port": "Barbados",
+      "airport": "BGI"
+    },
+    {
+      "port": "St. Maarten",
+      "airport": "SXM"
+    },
+    {
+      "port": "St. Thomas",
+      "airport": "STT"
+    }
+  ],
+  "amenities": [
+    "Guy's Burger Joint",
+    "BlueIguana Cantina",
+    "RedFrog Pub",
+    "WaterWorks",
+    "Serenity Adult-Only Retreat",
+    "Cloud 9 Spa",
+    "Punchliner Comedy Club",
+    "Playlist Productions",
+    "Seuss at Sea",
+    "Build-A-Bear Workshop",
+    "Hasbro, The Game Show",
+    "Lip Sync Battle",
+    "Groove for St. Jude",
+    "Carnival LIVE",
+    "Dr. Seuss Bookville"
+  ],
+  "excursions": [
+    "Snorkeling",
+    "Scuba Diving",
+    "Beach Break",
+    "City Tour",
+    "Food and Wine Tour",
+    "Adventure Zip Line",
+    "Shark Encounter",
+    "Swim with Dolphins",
+    "Glass-Bottom Boat Tour",
+    "Horseback Riding",
+    "Kayaking",
+    "Paddleboarding",
+    "Fishing",
+    "Boat Tour",
+    "Cultural Experience",
+    "Historical Landmark Tour",
+    "Wildlife Encounter"
+  ],
+  "dining_venues": [
+    "Main Dining Room",
+    "Steakhouse",
+    "Seafood Shack",
+    "Guy's Pig & Anchor Bar-B-Que"
+  ],
+  "onboard_spending_venues": [
+    "Cloud 9 Spa",
+    "Spa Carnival",
+    "The Spa",
+    "Steakhouse",
+    "Seafood Shack",
+    "Guy's Pig & Anchor Bar-B-Que",
+    "BlueIguana Cantina",
+    "RedFrog Pub",
+    "Punchliner Comedy Club",
+    "Casino",
+    "Slot Machines",
+    "Table Games",
+    "Shore Excursion Desk",
+    "Gift Shops",
+    "Duty-Free Shops",
+    "Internet Cafe",
+    "Photo Gallery",
+    "Photo Studio",
+    "Beverage Package",
+    "Wine Bar",
+    "Cocktail Bar",
+    "Coffee Bar",
+    "Cloud 9 Spa 23",
+    "Cloud 9 Spa 24"
+  ],
+  "precruise_packages": [
+    "Drink Package",
+    "Dining Package",
+    "Shore Excursion Package",
+    "Wi-Fi Package",
+    "Spa Package",
+    "Casino Package",
+    "Beverage Package",
+    "Wine Package",
+    "Cocktail Package",
+    "Coffee Package"
+  ],
+  "precruise_categories": [
+    "Beverages",
+    "Dining",
+    "Shore Excursions",
+    "Internet",
+    "Spa",
+    "Casino",
+    "Beverages",
+    "Wine",
+    "Cocktails",
+    "Coffee"
+  ],
+  "service_names": [
+    "Room Service",
+    "Dining Room Service",
+    "Spa Treatment",
+    "Shore Excursion",
+    "Casino Gaming",
+    "Internet Access",
+    "Photo Services",
+    "Beverage Service",
+    "Wine Tasting",
+    "Cocktail Service",
+    "Coffee Service",
+    "Fitness Center",
+    "Yoga Class",
+    "Pilates Class",
+    "Spinning Class",
+    "Sauna",
+    "Steam Room",
+    "Whirlpool",
+    "Adult-Only Solarium",
+    "Kids' Club",
+    "Youth Program",
+    "Teen Lounge",
+    "Arcade",
+    "Library",
+    "Shopping",
+    "Room Service 26"
+  ],
+  "guest_segments": [
+    "Budget Cruiser",
+    "Mainstream",
+    "Premium Seeker",
+    "Luxury Enthusiast",
+    "Adventure Seeker",
+    "Family Focused",
+    "Spa Enthusiast",
+    "Casino Patron",
+    "Wine Aficionado",
+    "Foodie"
+  ],
+  "flight_dest_airports": [
+    "MIA",
+    "FLL",
+    "IAH",
+    "MSY",
+    "MCO",
+    "TPA",
+    "SJU",
+    "NAS"
+  ],
+  "flight_dest_cities": [
+    "Miami",
+    "Fort Lauderdale",
+    "Houston",
+    "New Orleans",
+    "Orlando",
+    "Tampa",
+    "San Juan",
+    "Nassau"
+  ],
+  "profile_name": "carnival",
+  "database_name": "CCL_YIELD_OPTIMIZATION",
+  "warehouse_name": "CCL_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for CCL yield analytics",
+  "solution_title": "CCL Yield Optimization",
+  "agent_prefix": "CCL",
+  "loyalty_tier_high_sensitivity_threshold": 0.4,
+  "loyalty_tier_mid_sensitivity_threshold": 0.5,
+  "feedback_categories": [
+    "Dining",
+    "Entertainment",
+    "Service",
+    "Amenities",
+    "Excursions",
+    "Accommodations"
+  ],
+  "feedback_subcategories": [
+    "Buffet",
+    "Specialty Restaurant",
+    "Main Dining Room",
+    "Room Service",
+    "Bar Service",
+    "Wait Staff",
+    "Shows",
+    "Live Music",
+    "Nightclub",
+    "Movies",
+    "Guest Services",
+    "Concierge",
+    "Cabin Steward",
+    "Shore Excursion Desk",
+    "Pool Area",
+    "Fitness Center",
+    "Spa",
+    "Sports Deck",
+    "Casino",
+    "Suite Lounge",
+    "Beach Excursion",
+    "City Walking Tour",
+    "Cultural Tour",
+    "Snorkeling/Diving",
+    "Adventure Activity",
+    "Cabin Size",
+    "Cabin Cleanliness",
+    "Balcony",
+    "Bathroom",
+    "Bed Comfort"
+  ],
+  "feedback_templates_positive": [
+    " was fantastic - exactly what we hoped for.",
+    " exceeded all expectations. Highly recommend!"
+  ],
+  "feedback_templates_neutral": [
+    ". Average experience. Room for improvement."
+  ],
+  "feedback_templates_negative": [
+    " needs improvement. Not up to standard.",
+    " was disappointing compared to previous cruises."
+  ],
+  "onboard_spending_categories": [
+    "Spa",
+    "Dining",
+    "Casino",
+    "Shore Excursions",
+    "Shopping",
+    "Beverage Package",
+    "Internet",
+    "Photo"
+  ],
+  "service_categories": [
+    "SPA",
+    "EXCURSIONS",
+    "SPECIALTY_DINING",
+    "BEVERAGE_PACKAGE",
+    "CASINO",
+    "INTERNET",
+    "PHOTOS",
+    "SHORE_ACTIVITIES"
+  ],
+  "airlines": [
+    "American Airlines",
+    "Delta Air Lines",
+    "United Airlines",
+    "Southwest Airlines",
+    "JetBlue Airways",
+    "Alaska Airlines",
+    "Spirit Airlines",
+    "Frontier Airlines"
+  ],
+  "airline_codes": [
+    "AA",
+    "DL",
+    "UA",
+    "WN",
+    "B6",
+    "AS",
+    "NK",
+    "F9"
+  ],
+  "origin_airports": [
+    "JFK",
+    "LAX",
+    "ORD",
+    "ATL",
+    "DFW",
+    "SFO",
+    "SEA",
+    "BOS",
+    "DEN",
+    "PHX",
+    "DTW",
+    "MSP"
+  ],
+  "origin_cities": [
+    "New York",
+    "Los Angeles",
+    "Chicago",
+    "Atlanta",
+    "Dallas",
+    "San Francisco",
+    "Seattle",
+    "Boston",
+    "Denver",
+    "Phoenix",
+    "Detroit",
+    "Minneapolis"
+  ]
+}
