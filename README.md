@@ -1,14 +1,45 @@
 # Cruise Yield Optimization
 
-**Cruise Line:** Royal Caribbean International
-**Database:** `CRUISE_YIELD_OPTIMIZATION`
-**Warehouse:** `CRUISE_ANALYTICS_WH`
-
-## Overview
-
-End-to-end yield optimization solution for Royal Caribbean International built on Snowflake,
+End-to-end yield optimization solution for the cruise industry built on Snowflake,
 featuring medallion architecture (RAW -> CURATED -> ANALYTICS -> ML -> CLEAN_ROOM),
-semantic views with Cortex Analyst, ML pricing UDFs, and synthetic data generation.
+semantic views with Cortex Analyst, ML pricing UDFs, Cortex Agents, and synthetic data generation.
+
+## Available Profiles
+
+| Profile | Database | Warehouse | Agent Prefix | Data Identity |
+|---------|----------|-----------|-------------|---------------|
+| `cruise` | `CRUISE_YIELD_OPTIMIZATION` | `CRUISE_ANALYTICS_WH` | `CRUISE_` | Blended (generic) |
+| `royal_caribbean` | `RCL_YIELD_OPTIMIZATION` | `RCL_ANALYTICS_WH` | `RCL_` | Royal Caribbean |
+| `norwegian` | `NCL_YIELD_OPTIMIZATION` | `NCL_ANALYTICS_WH` | `NCL_` | Norwegian Cruise Line |
+
+## Quick Start
+
+```bash
+# Deploy a profile (generates SQL from templates + deploys to Snowflake)
+./deploy.sh cruise                      # Generic cruise, default connection
+./deploy.sh royal_caribbean SS_CURSOR   # RCL profile, specific connection
+./deploy.sh norwegian default           # NCL profile, default connection
+
+# Teardown a profile
+./clean.sh cruise [connection]
+./clean.sh royal_caribbean [connection]
+./clean.sh norwegian [connection]
+```
+
+## How It Works
+
+```
+config/<profile>.json     -- Cruise-line-specific data (ships, ports, loyalty, etc.)
+        |
+        v
+generate.py <profile>    -- Renders templates with config values
+        |
+        v
+generated/<profile>/sql/  -- Profile-specific SQL files
+        |
+        v
+deploy.sh <profile>       -- Deploys to Snowflake via snow sql
+```
 
 ## Architecture
 
@@ -20,24 +51,17 @@ semantic views with Cortex Analyst, ML pricing UDFs, and synthetic data generati
 | ML | ML | Pricing Features table, 3 ML UDFs |
 | Clean Room | CLEAN_ROOM | Airline Demand view for partner intelligence |
 
-## Quick Start
+## Cortex Agents (per profile)
 
-```bash
-# Generate SQL files for this cruise line profile
-python generate.py RCL
+| Agent | Description |
+|-------|-------------|
+| `<PREFIX>_YIELD_ANALYST` | Fleet yield, occupancy, revenue by ship/region |
+| `<PREFIX>_GUEST_INTEL` | Guest profiles, loyalty tiers, lifetime value |
+| `<PREFIX>_PRICING_COPILOT` | Conversion funnels, price trends, recommendations |
+| `<PREFIX>_PARTNER_INSIGHTS` | Airline demand signals, flight pricing |
+| `<PREFIX>_YIELD_OPTIMIZATION_AGENT` | Unified agent across all data sources |
 
-# Deploy to Snowflake
-./deploy.sh [CONNECTION_NAME]
-
-# Teardown
-./clean.sh [CONNECTION_NAME]
-```
-
-## Loyalty Program
-
-**Program:** Crown & Anchor Society
-
-## Data Volume
+## Data Volume (per profile)
 
 | Table | Rows |
 |-------|------|
@@ -54,15 +78,8 @@ python generate.py RCL
 | PRICING_FEATURES | 1,000,000 |
 | **Total** | **~8.8M** |
 
-## Semantic Views
+## Adding a New Cruise Line
 
-- **YIELD_ANALYTICS_SV** / **YIELD_ANALYTICS** - Sailing yield metrics
-- **PRICING_ANALYTICS_SV** / **PRICING_ANALYTICS** - Pricing performance
-- **PARTNER_SIGNALS_SV** / **PARTNER_SIGNALS** - Airline demand signals
-- **GUEST_360_SV** / **GUEST_360** - Comprehensive guest intelligence
-
-## ML Functions
-
-- `PREDICT_CONVERSION_PROB(cabin, price, tier, sensitivity, past_cruises)` - Conversion probability
-- `GET_OPTIMAL_PRICE_RECOMMENDATION(cabin, tier, sensitivity, past_cruises, season_mult)` - Optimal pricing
-- `RUN_PRICING_SCENARIO_SIMPLE(cabin, base_price, discount_pct, tier, avg_sensitivity)` - Scenario analysis
+1. Copy `config/cruise.json` to `config/<new_profile>.json`
+2. Edit the JSON with cruise-line-specific ships, ports, loyalty tiers, etc.
+3. Deploy: `./deploy.sh <new_profile> [connection]`

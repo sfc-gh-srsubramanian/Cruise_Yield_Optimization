@@ -18,8 +18,8 @@ import re
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_DIR = os.path.join(BASE_DIR, "config")
-SQL_DIR = os.path.join(BASE_DIR, "sql")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+GENERATED_DIR = os.path.join(BASE_DIR, "generated")
 
 
 def load_config(profile_name):
@@ -282,10 +282,13 @@ def generate(profile_name):
     config = load_config(profile_name)
     replacements = build_replacements(config)
 
+    profile_out = os.path.join(GENERATED_DIR, profile_name)
+
     print(f"Generating SQL for profile: {profile_name}")
     print(f"  Cruise line: {config['cruise_line']}")
     print(f"  Database:    {config['database_name']}")
     print(f"  Warehouse:   {config['warehouse_name']}")
+    print(f"  Output:      generated/{profile_name}/")
     print()
 
     # Process all template files
@@ -301,11 +304,11 @@ def generate(profile_name):
         sys.exit(1)
 
     for template_path in template_files:
-        # Determine output path
+        # Determine output path relative to templates dir
         rel_path = os.path.relpath(template_path, TEMPLATES_DIR)
         # Remove .template suffix
         output_rel = rel_path.replace(".template", "")
-        output_path = os.path.join(BASE_DIR, output_rel)
+        output_path = os.path.join(profile_out, output_rel)
 
         # Ensure output directory exists
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -318,11 +321,15 @@ def generate(profile_name):
         with open(output_path, "w") as f:
             f.write(rendered)
 
+        # Make shell scripts executable
+        if output_path.endswith(".sh"):
+            os.chmod(output_path, 0o755)
+
         print(f"  Generated: {output_rel}")
 
     print()
-    print(f"Done. All files generated for '{config['cruise_line']}'.")
-    print(f"Deploy with: ./deploy.sh <connection_name>")
+    print(f"Done. All files generated in generated/{profile_name}/")
+    print(f"Deploy with: ./deploy.sh {profile_name} [connection_name]")
 
 
 if __name__ == "__main__":

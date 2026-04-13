@@ -11,3 +11,6 @@ __pycache__/
 .vscode/
 *.swp
 *.swo
+
+# Generated build artifacts
+generated/

@@ -1,44 +1,44 @@
 {
-  "profile_name": "royal_caribbean",
-  "cruise_line": "Royal Caribbean International",
-  "cruise_line_short": "RCL",
+  "profile_name": "cruise",
+  "cruise_line": "Cruise Line",
+  "cruise_line_short": "CRUISE",
 
-  "database_name": "RCL_YIELD_OPTIMIZATION",
-  "warehouse_name": "RCL_ANALYTICS_WH",
-  "warehouse_comment": "Warehouse for RCL yield analytics",
-  "solution_title": "RCL Yield Optimization",
-  "agent_prefix": "RCL",
+  "database_name": "CRUISE_YIELD_OPTIMIZATION",
+  "warehouse_name": "CRUISE_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for Cruise yield analytics",
+  "solution_title": "Cruise Yield Optimization",
+  "agent_prefix": "CRUISE",
   "sample_ship_1": "Harmony of the Seas",
-  "sample_ship_2": "Symphony of the Seas",
+  "sample_ship_2": "Norwegian Prima",
   "sample_ship_class_1": "Oasis",
-  "sample_tier_top": "Diamond+",
+  "sample_tier_top": "Diamond",
   "sample_cabin_mid": "Balcony",
   "sample_cabin_top": "Suite",
 
-  "loyalty_program": "Crown & Anchor Society",
-  "loyalty_tiers": ["Blue", "Gold", "Platinum", "Diamond", "Diamond+"],
-  "loyalty_tier_high": ["Diamond+", "Diamond"],
-  "loyalty_tier_mid": ["Platinum", "Gold"],
+  "loyalty_program": "Loyalty Rewards",
+  "loyalty_tiers": ["Bronze", "Silver", "Gold", "Platinum", "Diamond"],
+  "loyalty_tier_high": ["Diamond", "Platinum"],
+  "loyalty_tier_mid": ["Gold", "Silver"],
   "loyalty_tier_high_sensitivity_threshold": 0.4,
   "loyalty_tier_mid_sensitivity_threshold": 0.5,
 
   "ships": [
-    {"name": "Harmony of the Seas",      "class": "Oasis",    "capacity": 6780},
-    {"name": "Symphony of the Seas",     "class": "Oasis",    "capacity": 6680},
-    {"name": "Wonder of the Seas",       "class": "Oasis",    "capacity": 6988},
-    {"name": "Oasis of the Seas",        "class": "Oasis",    "capacity": 6780},
-    {"name": "Allure of the Seas",       "class": "Oasis",    "capacity": 6780},
-    {"name": "Odyssey of the Seas",      "class": "Quantum",  "capacity": 4180},
-    {"name": "Anthem of the Seas",       "class": "Quantum",  "capacity": 4180},
-    {"name": "Ovation of the Seas",      "class": "Quantum",  "capacity": 4180},
-    {"name": "Navigator of the Seas",    "class": "Voyager",  "capacity": 3114},
-    {"name": "Independence of the Seas", "class": "Freedom",  "capacity": 3634}
+    {"name": "Harmony of the Seas",      "class": "Oasis",          "capacity": 6780},
+    {"name": "Symphony of the Seas",     "class": "Oasis",          "capacity": 6680},
+    {"name": "Wonder of the Seas",       "class": "Oasis",          "capacity": 6988},
+    {"name": "Odyssey of the Seas",      "class": "Quantum",        "capacity": 4180},
+    {"name": "Anthem of the Seas",       "class": "Quantum",        "capacity": 4180},
+    {"name": "Norwegian Prima",          "class": "Prima",          "capacity": 3215},
+    {"name": "Norwegian Viva",           "class": "Prima",          "capacity": 3219},
+    {"name": "Norwegian Encore",         "class": "Breakaway Plus", "capacity": 3998},
+    {"name": "Norwegian Bliss",          "class": "Breakaway Plus", "capacity": 4004},
+    {"name": "Norwegian Epic",           "class": "Epic",           "capacity": 4100}
   ],
 
   "cabin_classes": ["Interior", "Ocean View", "Balcony", "Suite", "Grand Suite"],
-  "base_prices": [800, 1100, 1400, 2200, 4500],
+  "base_prices": [750, 1050, 1350, 2500, 5000],
 
-  "regions": ["Caribbean", "Alaska", "Europe", "Mexico", "Bahamas", "Bermuda"],
+  "regions": ["Caribbean", "Alaska", "Europe", "Mexico", "Bahamas", "Hawaii"],
 
   "ports": [
     {"port": "Miami",            "airport": "MIA"},
@@ -48,37 +48,37 @@
     {"port": "New York",         "airport": "JFK"},
     {"port": "Boston",           "airport": "BOS"},
     {"port": "Los Angeles",      "airport": "LAX"},
-    {"port": "San Diego",        "airport": "SAN"},
     {"port": "Seattle",          "airport": "SEA"},
     {"port": "Vancouver",        "airport": "YVR"},
+    {"port": "Honolulu",         "airport": "HNL"},
     {"port": "Barcelona",        "airport": "BCN"},
     {"port": "Rome",             "airport": "FCO"},
     {"port": "Southampton",      "airport": "LHR"},
     {"port": "San Juan",         "airport": "SJU"},
     {"port": "Galveston",        "airport": "IAH"},
-    {"port": "Baltimore",        "airport": "BWI"}
+    {"port": "Copenhagen",       "airport": "CPH"}
   ],
 
   "amenities": [
     "FlowRider", "Perfect Storm Slides", "North Star Observation",
-    "Suite Lounge", "Private Pool", "Bionic Bar", "Rock Climbing Wall",
-    "Ultimate Abyss", "CocoCay Beach Club", "Thermal Suite",
-    "Wonderland Restaurant", "Vitality Spa", "Coastal Kitchen",
-    "Chef's Table", "Royal Theater VIP"
+    "Suite Lounge", "Galaxy Pavilion", "Go-Kart Speedway",
+    "Mandara Spa", "Ocean Boulevard", "Bionic Bar",
+    "Rock Climbing Wall", "Aqua Park", "Vibe Beach Club",
+    "Thermal Suite", "Coastal Kitchen", "Prima Theater"
   ],
 
   "excursions": [
     "Perfect Day CocoCay", "Cozumel Snorkeling Adventure",
     "Jamaica Dunn's River Falls", "Grand Cayman Stingray City",
     "Alaska Glacier Trek", "Juneau Whale Watching", "Barcelona Gothic Quarter",
-    "Santorini Wine Tour", "Rome Colosseum Tour", "St. Thomas Catamaran Sail",
-    "Ketchikan Lumberjack Show", "Belize Cave Tubing", "Aruba Jeep Adventure",
-    "Labadee Dragon Zipline", "Roatan Zipline & Beach",
-    "Curacao Beach Hopping", "Costa Maya Mayan Ruins"
+    "Santorini Wine Tour", "Rome Colosseum Tour", "Great Stirrup Cay Beach Day",
+    "Harvest Caye Zip Line", "Bermuda Crystal Caves", "Reykjavik Golden Circle",
+    "Dubrovnik Walking Tour", "Amalfi Coast Boat Tour",
+    "Nassau Atlantis Day Pass", "Aruba Off-Road Adventure"
   ],
 
   "dining_venues": [
-    "Chops Grille", "Giovannis Table", "Izumi", "Wonderland"
+    "Chops Grille", "Le Bistro", "Food Republic", "Izumi"
   ],
 
   "onboard_spending_categories": [
@@ -118,12 +118,12 @@
   "service_names": [
     "Couples Massage", "Deep Tissue Massage", "Hot Stone Massage", "Facial Treatment",
     "Snorkeling Tour", "Scuba Diving", "City Walking Tour", "Helicopter Tour",
-    "Chops Grille", "Giovannis Table", "Izumi", "Wonderland",
+    "Chops Grille Dinner", "Le Bistro Prix Fixe", "Food Republic Tasting", "Izumi Omakase",
     "Deluxe Beverage Package", "Refreshment Package", "Classic Soda Package",
     "Slots", "Poker", "Blackjack",
-    "Surf & Stream Package", "Surf Package",
+    "Premium WiFi", "Social Media WiFi",
     "Digital Photo Package", "Ultimate Photo Package",
-    "ATV Adventure", "Zip Line Adventure", "Parasailing", "Jet Ski Rental"
+    "Zip Line Adventure", "Go-Kart Race", "Parasailing", "Jet Ski Rental"
   ],
 
   "guest_segments": [
@@ -169,8 +169,8 @@
     "San Francisco", "Seattle", "Boston", "Denver", "Phoenix", "Detroit", "Minneapolis"
   ],
 
-  "flight_dest_airports": ["MIA", "FLL", "TPA", "MCO", "SEA", "LAX", "SJU", "GAL"],
+  "flight_dest_airports": ["MIA", "FLL", "TPA", "MCO", "SEA", "LAX", "SJU", "HNL"],
   "flight_dest_cities": [
-    "Miami", "Fort Lauderdale", "Tampa", "Orlando", "Seattle", "Los Angeles", "San Juan", "Galveston"
+    "Miami", "Fort Lauderdale", "Tampa", "Orlando", "Seattle", "Los Angeles", "San Juan", "Honolulu"
   ]
 }

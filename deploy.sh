@@ -1,15 +1,63 @@
 #!/bin/bash
 # =============================================================================
-# Cruise Yield Optimization - Deployment Script
-# Description: Deploys all database objects in dependency order
-# Usage: ./deploy.sh [CONNECTION_NAME]
+# Cruise Yield Optimization - Unified Deployment Script
+# Description: Generates SQL from a profile config and deploys to Snowflake
+# Usage: ./deploy.sh <profile> [connection]
+#   profile:    cruise | royal_caribbean | norwegian
+#   connection: Snowflake connection name (default: "default")
 # =============================================================================
 
-CONNECTION="${1:-default}"
-SQL_DIR="$(cd "$(dirname "$0")/sql" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# --- Validate arguments ---
+if [ -z "$1" ]; then
+    echo "Usage: ./deploy.sh <profile> [connection]"
+    echo ""
+    echo "Available profiles:"
+    for f in "$SCRIPT_DIR"/config/*.json; do
+        basename "$f" .json
+    done | sed 's/^/  - /'
+    echo ""
+    echo "Examples:"
+    echo "  ./deploy.sh cruise              # Generic cruise, default connection"
+    echo "  ./deploy.sh royal_caribbean     # RCL profile, default connection"
+    echo "  ./deploy.sh norwegian SS_CURSOR # NCL profile, specific connection"
+    exit 1
+fi
+
+PROFILE="$1"
+CONNECTION="${2:-default}"
+CONFIG_FILE="$SCRIPT_DIR/config/${PROFILE}.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Error: Profile '$PROFILE' not found at $CONFIG_FILE"
+    echo ""
+    echo "Available profiles:"
+    for f in "$SCRIPT_DIR"/config/*.json; do
+        basename "$f" .json
+    done | sed 's/^/  - /'
+    exit 1
+fi
+
+# --- Step 1: Generate SQL from templates ---
 echo "=============================================="
-echo "  Cruise Yield Optimization - Deployment"
+echo "  Step 1: Generating SQL for profile '$PROFILE'"
+echo "=============================================="
+echo ""
+
+python3 "$SCRIPT_DIR/generate.py" "$PROFILE"
+if [ $? -ne 0 ]; then
+    echo "Generation failed. Aborting deployment."
+    exit 1
+fi
+
+# --- Step 2: Deploy generated SQL ---
+SQL_DIR="$SCRIPT_DIR/generated/$PROFILE/sql"
+
+echo ""
+echo "=============================================="
+echo "  Step 2: Deploying to Snowflake"
+echo "  Profile:    $PROFILE"
 echo "  Connection: $CONNECTION"
 echo "=============================================="
 
@@ -47,16 +95,8 @@ echo "=============================================="
 echo "  Deployment Complete!"
 echo "=============================================="
 echo ""
-echo "Objects created in CRUISE_YIELD_OPTIMIZATION:"
-echo "  - 9 schemas (RAW, CURATED, ANALYTICS, ML, CLEAN_ROOM, AGENTS, SEARCH, SCENARIOS, PUBLIC)"
-echo "  - 8 RAW tables + 1 stage"
-echo "  - 2 CURATED tables + 3 views"
-echo "  - 2 ANALYTICS views + 1 stage"
-echo "  - 1 CLEAN_ROOM view"
-echo "  - 1 ML table + 3 UDFs"
-echo "  - 4 basic semantic views + 4 Cortex Analyst semantic views"
-echo "  - 1 analytics table function"
-echo "  - 5 Cortex Agents (yield, guest, pricing, partner, unified)"
-echo "  - Agents registered with Snowflake Intelligence"
-echo "  - 1 warehouse (CRUISE_ANALYTICS_WH)"
-echo "  - Synthetic data loaded into all tables (~8.8M total rows)"
+echo "Profile '$PROFILE' deployed successfully."
+echo "  - Generated SQL in: generated/$PROFILE/sql/"
+echo "  - Connection used:  $CONNECTION"
+echo ""
+echo "To teardown: ./clean.sh $PROFILE [$CONNECTION]"
