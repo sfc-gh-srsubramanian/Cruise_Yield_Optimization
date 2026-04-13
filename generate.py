@@ -113,6 +113,13 @@ def build_value_segment_case(config):
     END"""
 
 
+def sql_escape(value):
+    """Escape single quotes in a string for safe SQL embedding."""
+    if isinstance(value, str):
+        return value.replace("'", "''")
+    return value
+
+
 def build_replacements(config):
     """Build the full replacement dictionary from config."""
     ships = config["ships"]
@@ -153,20 +160,20 @@ def build_replacements(config):
         # Infrastructure
         "{{DATABASE_NAME}}": config["database_name"],
         "{{WAREHOUSE_NAME}}": config["warehouse_name"],
-        "{{WAREHOUSE_COMMENT}}": config["warehouse_comment"],
-        "{{SOLUTION_TITLE}}": config["solution_title"],
-        "{{CRUISE_LINE}}": config["cruise_line"],
+        "{{WAREHOUSE_COMMENT}}": sql_escape(config["warehouse_comment"]),
+        "{{SOLUTION_TITLE}}": sql_escape(config["solution_title"]),
+        "{{CRUISE_LINE}}": sql_escape(config["cruise_line"]),
         "{{CRUISE_LINE_SHORT}}": config["cruise_line_short"],
         "{{AGENT_PREFIX}}": config["agent_prefix"],
-        "{{SAMPLE_SHIP_1}}": config["sample_ship_1"],
-        "{{SAMPLE_SHIP_2}}": config["sample_ship_2"],
-        "{{SAMPLE_SHIP_CLASS_1}}": config["sample_ship_class_1"],
-        "{{SAMPLE_TIER_TOP}}": config["sample_tier_top"],
-        "{{SAMPLE_CABIN_MID}}": config["sample_cabin_mid"],
-        "{{SAMPLE_CABIN_TOP}}": config["sample_cabin_top"],
+        "{{SAMPLE_SHIP_1}}": sql_escape(config["sample_ship_1"]),
+        "{{SAMPLE_SHIP_2}}": sql_escape(config["sample_ship_2"]),
+        "{{SAMPLE_SHIP_CLASS_1}}": sql_escape(config["sample_ship_class_1"]),
+        "{{SAMPLE_TIER_TOP}}": sql_escape(config["sample_tier_top"]),
+        "{{SAMPLE_CABIN_MID}}": sql_escape(config["sample_cabin_mid"]),
+        "{{SAMPLE_CABIN_TOP}}": sql_escape(config["sample_cabin_top"]),
 
         # Loyalty
-        "{{LOYALTY_PROGRAM}}": config["loyalty_program"],
+        "{{LOYALTY_PROGRAM}}": sql_escape(config["loyalty_program"]),
         "{{LOYALTY_TIERS_ARRAY}}": sql_array(tiers),
         "{{LOYALTY_TIER_NUMS_ARRAY}}": sql_array(tier_nums, quote=False),
         "{{NUM_TIERS}}": str(num_tiers),

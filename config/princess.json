@@ -1,0 +1,445 @@
+{
+  "cruise_line": "Princess Cruises",
+  "cruise_line_short": "PCL",
+  "sample_ship_1": "Royal Princess",
+  "sample_ship_2": "Majestic Princess",
+  "sample_ship_class_1": "Royal Class",
+  "sample_tier_top": "Elite",
+  "sample_cabin_mid": "Balcony",
+  "sample_cabin_top": "Suite",
+  "loyalty_program": "Captain's Circle",
+  "loyalty_tiers": [
+    "Gold",
+    "Ruby",
+    "Platinum",
+    "Elite",
+    "Master"
+  ],
+  "loyalty_tier_high": [
+    "Elite",
+    "Master"
+  ],
+  "loyalty_tier_mid": [
+    "Platinum",
+    "Ruby"
+  ],
+  "ships": [
+    {
+      "name": "Royal Princess",
+      "class": "Royal Class",
+      "capacity": 3560
+    },
+    {
+      "name": "Majestic Princess",
+      "class": "Royal Class",
+      "capacity": 3560
+    },
+    {
+      "name": "Regal Princess",
+      "class": "Royal Class",
+      "capacity": 3560
+    },
+    {
+      "name": "Sky Princess",
+      "class": "Royal Class",
+      "capacity": 3660
+    },
+    {
+      "name": "Enchanted Princess",
+      "class": "Royal Class",
+      "capacity": 3660
+    },
+    {
+      "name": "Emerald Princess",
+      "class": "Grand Class",
+      "capacity": 3080
+    },
+    {
+      "name": "Ruby Princess",
+      "class": "Grand Class",
+      "capacity": 3080
+    },
+    {
+      "name": "Crown Princess",
+      "class": "Grand Class",
+      "capacity": 3080
+    },
+    {
+      "name": "Golden Princess",
+      "class": "Grand Class",
+      "capacity": 2600
+    },
+    {
+      "name": "Grand Princess",
+      "class": "Grand Class",
+      "capacity": 2600
+    }
+  ],
+  "cabin_classes": [
+    "Interior",
+    "Oceanview",
+    "Balcony",
+    "Mini-Suite",
+    "Suite"
+  ],
+  "base_prices": [
+    800,
+    1200,
+    1800,
+    2500,
+    3500
+  ],
+  "regions": [
+    "Alaska",
+    "Caribbean",
+    "Europe",
+    "Mexico",
+    "Panama Canal",
+    "South America"
+  ],
+  "ports": [
+    {
+      "port": "Fort Lauderdale",
+      "airport": "FLL"
+    },
+    {
+      "port": "Los Angeles",
+      "airport": "LAX"
+    },
+    {
+      "port": "San Francisco",
+      "airport": "SFO"
+    },
+    {
+      "port": "Seattle",
+      "airport": "SEA"
+    },
+    {
+      "port": "Miami",
+      "airport": "MIA"
+    },
+    {
+      "port": "New York",
+      "airport": "JFK"
+    },
+    {
+      "port": "Rome",
+      "airport": "FCO"
+    },
+    {
+      "port": "Barcelona",
+      "airport": "BCN"
+    },
+    {
+      "port": "Athens",
+      "airport": "ATH"
+    },
+    {
+      "port": "Dubai",
+      "airport": "DXB"
+    },
+    {
+      "port": "Singapore",
+      "airport": "SIN"
+    },
+    {
+      "port": "Sydney",
+      "airport": "SYD"
+    },
+    {
+      "port": "Auckland",
+      "airport": "AKL"
+    },
+    {
+      "port": "Honolulu",
+      "airport": "HNL"
+    },
+    {
+      "port": "Vancouver",
+      "airport": "YVR"
+    },
+    {
+      "port": "San Juan",
+      "airport": "SJU"
+    }
+  ],
+  "amenities": [
+    "Adults-only Solarium",
+    "Princess Luxury Bed",
+    "Movies Under the Stars",
+    "The Sanctuary",
+    "Lotus Spa",
+    "The Enclave",
+    "Discovery at Sea",
+    "Princess Cruises App",
+    "Ocean Medallion",
+    "MedallionClass",
+    "Princess Cays",
+    "Shore Excursions",
+    "Wine and Cheese Tastings",
+    "Casino",
+    "Shopping"
+  ],
+  "excursions": [
+    "Snorkeling",
+    "Scuba Diving",
+    "Beach Break",
+    "City Tour",
+    "Food and Wine Tour",
+    "Wildlife Encounter",
+    "Adventure Hike",
+    "Cultural Immersion",
+    "Historical Landmark",
+    "Water Sports",
+    "Relaxation Day",
+    "Golf Outing",
+    "Spa Day",
+    "Wine Tasting",
+    "Cooking Class",
+    "Photography Tour",
+    "Snorkeling 17"
+  ],
+  "dining_venues": [
+    "Symphony Dining Room",
+    "Sabatini's",
+    "Crown Grill",
+    "Alfredo's Pizzeria"
+  ],
+  "onboard_spending_venues": [
+    "Lotus Spa",
+    "The Enclave",
+    "Princess Cays",
+    "Casino",
+    "Shopping",
+    "Beverage Package",
+    "Internet Cafe",
+    "Photo Studio",
+    "Wine and Cheese Bar",
+    "Coffee and Confections",
+    "Gelato Bar",
+    "Patisserie",
+    "SeaWalk Bar",
+    "Mermaid's Tail Bar",
+    "Wheelhouse Bar",
+    "Vines Wine Bar",
+    "Churchill's Cigar Lounge",
+    "Crooners Bar",
+    "Explorers Lounge",
+    "Vista Lounge",
+    "The Piazza",
+    "International Cafe",
+    "Horizon Court",
+    "Cafe Caribe"
+  ],
+  "precruise_packages": [
+    "Hotel Stay",
+    "Flights",
+    "Transfers",
+    "Shore Excursions",
+    "Drink Package",
+    "Wi-Fi Package",
+    "Dining Package",
+    "Spa Package",
+    "Casino Package",
+    "Shopping Package"
+  ],
+  "precruise_categories": [
+    "Accommodations",
+    "Travel",
+    "Shore Excursions",
+    "Beverages",
+    "Internet",
+    "Dining",
+    "Spa",
+    "Casino",
+    "Shopping",
+    "Other"
+  ],
+  "service_names": [
+    "Room Service",
+    "Dining Reservations",
+    "Shore Excursion Booking",
+    "Spa Appointments",
+    "Casino Tournaments",
+    "Wine Tastings",
+    "Cooking Demonstrations",
+    "Shopping Consultations",
+    "Internet Access",
+    "Photography Sessions",
+    "Golf Lessons",
+    "Fitness Classes",
+    "Yoga Classes",
+    "Pilates Classes",
+    "Spa Treatments",
+    "Massage Therapy",
+    "Facials",
+    "Manicures",
+    "Pedicures",
+    "Hair Salon",
+    "Babysitting Services",
+    "Youth Programs",
+    "Kids' Clubs",
+    "Room Service 24",
+    "Room Service 25",
+    "Room Service 26"
+  ],
+  "guest_segments": [
+    "Budget Cruiser",
+    "Mainstream",
+    "Premium Seeker",
+    "Luxury Enthusiast",
+    "Adventure Seeker",
+    "Family Focused",
+    "Spa Enthusiast",
+    "Casino Patron",
+    "Wine Aficionado",
+    "Foodie"
+  ],
+  "flight_dest_airports": [
+    "FLL",
+    "LAX",
+    "SFO",
+    "SEA",
+    "MIA",
+    "JFK",
+    "FCO",
+    "BCN"
+  ],
+  "flight_dest_cities": [
+    "Fort Lauderdale",
+    "Los Angeles",
+    "San Francisco",
+    "Seattle",
+    "Miami",
+    "New York",
+    "Rome",
+    "Barcelona"
+  ],
+  "profile_name": "princess",
+  "database_name": "PCL_YIELD_OPTIMIZATION",
+  "warehouse_name": "PCL_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for PCL yield analytics",
+  "solution_title": "PCL Yield Optimization",
+  "agent_prefix": "PCL",
+  "loyalty_tier_high_sensitivity_threshold": 0.4,
+  "loyalty_tier_mid_sensitivity_threshold": 0.5,
+  "feedback_categories": [
+    "Dining",
+    "Entertainment",
+    "Service",
+    "Amenities",
+    "Excursions",
+    "Accommodations"
+  ],
+  "feedback_subcategories": [
+    "Buffet",
+    "Specialty Restaurant",
+    "Main Dining Room",
+    "Room Service",
+    "Bar Service",
+    "Wait Staff",
+    "Shows",
+    "Live Music",
+    "Nightclub",
+    "Movies",
+    "Guest Services",
+    "Concierge",
+    "Cabin Steward",
+    "Shore Excursion Desk",
+    "Pool Area",
+    "Fitness Center",
+    "Spa",
+    "Sports Deck",
+    "Casino",
+    "Suite Lounge",
+    "Beach Excursion",
+    "City Walking Tour",
+    "Cultural Tour",
+    "Snorkeling/Diving",
+    "Adventure Activity",
+    "Cabin Size",
+    "Cabin Cleanliness",
+    "Balcony",
+    "Bathroom",
+    "Bed Comfort"
+  ],
+  "feedback_templates_positive": [
+    " was fantastic - exactly what we hoped for.",
+    " exceeded all expectations. Highly recommend!"
+  ],
+  "feedback_templates_neutral": [
+    ". Average experience. Room for improvement."
+  ],
+  "feedback_templates_negative": [
+    " needs improvement. Not up to standard.",
+    " was disappointing compared to previous cruises."
+  ],
+  "onboard_spending_categories": [
+    "Spa",
+    "Dining",
+    "Casino",
+    "Shore Excursions",
+    "Shopping",
+    "Beverage Package",
+    "Internet",
+    "Photo"
+  ],
+  "service_categories": [
+    "SPA",
+    "EXCURSIONS",
+    "SPECIALTY_DINING",
+    "BEVERAGE_PACKAGE",
+    "CASINO",
+    "INTERNET",
+    "PHOTOS",
+    "SHORE_ACTIVITIES"
+  ],
+  "airlines": [
+    "American Airlines",
+    "Delta Air Lines",
+    "United Airlines",
+    "Southwest Airlines",
+    "JetBlue Airways",
+    "Alaska Airlines",
+    "Spirit Airlines",
+    "Frontier Airlines"
+  ],
+  "airline_codes": [
+    "AA",
+    "DL",
+    "UA",
+    "WN",
+    "B6",
+    "AS",
+    "NK",
+    "F9"
+  ],
+  "origin_airports": [
+    "JFK",
+    "LAX",
+    "ORD",
+    "ATL",
+    "DFW",
+    "SFO",
+    "SEA",
+    "BOS",
+    "DEN",
+    "PHX",
+    "DTW",
+    "MSP"
+  ],
+  "origin_cities": [
+    "New York",
+    "Los Angeles",
+    "Chicago",
+    "Atlanta",
+    "Dallas",
+    "San Francisco",
+    "Seattle",
+    "Boston",
+    "Denver",
+    "Phoenix",
+    "Detroit",
+    "Minneapolis"
+  ]
+}

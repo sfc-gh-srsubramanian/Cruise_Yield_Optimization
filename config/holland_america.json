@@ -1,0 +1,445 @@
+{
+  "cruise_line": "Holland America Line",
+  "cruise_line_short": "HAL",
+  "sample_ship_1": "ms Koningsdam",
+  "sample_ship_2": "ms Nieuw Amsterdam",
+  "sample_ship_class_1": "Pinnacle Class",
+  "sample_tier_top": "5-Star Mariner",
+  "sample_cabin_mid": "Verandah Stateroom",
+  "sample_cabin_top": "Neptune Suite",
+  "loyalty_program": "Mariner Society",
+  "loyalty_tiers": [
+    "Bronze",
+    "Silver",
+    "Gold",
+    "Platinum",
+    "5-Star Mariner"
+  ],
+  "loyalty_tier_high": [
+    "5-Star Mariner",
+    "Platinum"
+  ],
+  "loyalty_tier_mid": [
+    "Gold",
+    "Silver"
+  ],
+  "ships": [
+    {
+      "name": "ms Amsterdam",
+      "class": "R Class",
+      "capacity": 1380
+    },
+    {
+      "name": "ms Koningsdam",
+      "class": "Pinnacle Class",
+      "capacity": 2650
+    },
+    {
+      "name": "ms Nieuw Amsterdam",
+      "class": "Signature Class",
+      "capacity": 2100
+    },
+    {
+      "name": "ms Noordam",
+      "class": "Vista Class",
+      "capacity": 1848
+    },
+    {
+      "name": "ms Oosterdam",
+      "class": "Vista Class",
+      "capacity": 1848
+    },
+    {
+      "name": "ms Prinsendam",
+      "class": "Prinsendam Class",
+      "capacity": 835
+    },
+    {
+      "name": "ms Rotterdam",
+      "class": "R Class",
+      "capacity": 1404
+    },
+    {
+      "name": "ms Statendam",
+      "class": "S Class",
+      "capacity": 1258
+    },
+    {
+      "name": "ms Veendam",
+      "class": "S Class",
+      "capacity": 1258
+    },
+    {
+      "name": "ms Volendam",
+      "class": "R Class",
+      "capacity": 1432
+    }
+  ],
+  "cabin_classes": [
+    "Interior",
+    "Oceanview",
+    "Verandah",
+    "Suite",
+    "Neptune Suite"
+  ],
+  "base_prices": [
+    800,
+    1200,
+    1800,
+    2500,
+    3500
+  ],
+  "regions": [
+    "Alaska",
+    "Caribbean",
+    "Europe",
+    "Mexico",
+    "Panama Canal",
+    "South America"
+  ],
+  "ports": [
+    {
+      "port": "Amsterdam",
+      "airport": "AMS"
+    },
+    {
+      "port": "Barcelona",
+      "airport": "BCN"
+    },
+    {
+      "port": "Fort Lauderdale",
+      "airport": "FLL"
+    },
+    {
+      "port": "Honolulu",
+      "airport": "HNL"
+    },
+    {
+      "port": "Los Angeles",
+      "airport": "LAX"
+    },
+    {
+      "port": "Miami",
+      "airport": "MIA"
+    },
+    {
+      "port": "New York",
+      "airport": "JFK"
+    },
+    {
+      "port": "Rome",
+      "airport": "FCO"
+    },
+    {
+      "port": "San Diego",
+      "airport": "SAN"
+    },
+    {
+      "port": "San Francisco",
+      "airport": "SFO"
+    },
+    {
+      "port": "Seattle",
+      "airport": "SEA"
+    },
+    {
+      "port": "Sydney",
+      "airport": "SYD"
+    },
+    {
+      "port": "Tampa",
+      "airport": "TPA"
+    },
+    {
+      "port": "Vancouver",
+      "airport": "YVR"
+    },
+    {
+      "port": "Venice",
+      "airport": "VCE"
+    },
+    {
+      "port": "Whittier",
+      "airport": "ANC"
+    }
+  ],
+  "amenities": [
+    "Explorations Central",
+    "America's Test Kitchen",
+    "BBC Earth Experiences",
+    "Digital Workshop",
+    "Greenhouse Spa & Salon",
+    "The Retreat",
+    "The Culinary Arts Center",
+    "The Showroom at Sea",
+    "The Mainstage",
+    "The Music Walk",
+    "The Casino",
+    "The Shops",
+    "The Spa",
+    "The Fitness Center",
+    "The Pool"
+  ],
+  "excursions": [
+    "Glacier Hike",
+    "Snorkeling Adventure",
+    "Wine Tasting",
+    "City Tour",
+    "Beach Break",
+    "Scenic Drive",
+    "Wildlife Safari",
+    "Cultural Immersion",
+    "Foodie Tour",
+    "Adventure Zipline",
+    "Shore Fishing",
+    "Kayaking",
+    "Paddleboarding",
+    "Horseback Riding",
+    "Biking",
+    "Hiking",
+    "Scuba Diving"
+  ],
+  "dining_venues": [
+    "The Dining Room",
+    "The Pinnacle Grill",
+    "Tamarind",
+    "Canal Cafe"
+  ],
+  "onboard_spending_venues": [
+    "The Spa",
+    "The Salon",
+    "The Fitness Center",
+    "The Dining Room",
+    "The Pinnacle Grill",
+    "Tamarind",
+    "The Casino",
+    "The Slot Machines",
+    "The Poker Room",
+    "The Shore Excursion Desk",
+    "The Tour Office",
+    "The Destination Services",
+    "The Shops",
+    "The Jewelry Store",
+    "The Boutique",
+    "The Beverage Package",
+    "The Wine Bar",
+    "The Coffee Shop",
+    "The Internet Cafe",
+    "The Computer Center",
+    "The Wi-Fi Hotspot",
+    "The Photo Gallery",
+    "The Photo Studio",
+    "The Portrait Studio"
+  ],
+  "precruise_packages": [
+    "Hotel Stay",
+    "Transfer Package",
+    "Shore Excursion Package",
+    "Drink Package",
+    "Dining Package",
+    "Spa Package",
+    "Internet Package",
+    "Photo Package",
+    "Concierge Service",
+    "Travel Insurance"
+  ],
+  "precruise_categories": [
+    "Accommodations",
+    "Transfers",
+    "Shore Excursions",
+    "Beverages",
+    "Dining",
+    "Spa",
+    "Internet",
+    "Photos",
+    "Concierge",
+    "Insurance"
+  ],
+  "service_names": [
+    "Shore Excursion Booking",
+    "Dining Reservations",
+    "Spa Appointments",
+    "Internet Access",
+    "Photo Services",
+    "Concierge Services",
+    "Travel Insurance",
+    "Hotel Reservations",
+    "Transfer Services",
+    "Drink Package",
+    "Dining Package",
+    "Spa Package",
+    "Internet Package",
+    "Photo Package",
+    "Casino Services",
+    "Shopping Services",
+    "Fitness Classes",
+    "Wellness Programs",
+    "Enrichment Programs",
+    "Entertainment Options",
+    "Youth Programs",
+    "Kids' Clubs",
+    "Babysitting Services",
+    "Shore Excursion Booking 24",
+    "Shore Excursion Booking 25",
+    "Shore Excursion Booking 26"
+  ],
+  "guest_segments": [
+    "Budget Cruiser",
+    "Mainstream",
+    "Premium Seeker",
+    "Luxury Enthusiast",
+    "Adventure Seeker",
+    "Family Focused",
+    "Spa Enthusiast",
+    "Casino Patron",
+    "Wine Aficionado",
+    "Foodie"
+  ],
+  "flight_dest_airports": [
+    "AMS",
+    "BCN",
+    "FLL",
+    "HNL",
+    "LAX",
+    "MIA",
+    "JFK",
+    "FCO"
+  ],
+  "flight_dest_cities": [
+    "Amsterdam",
+    "Barcelona",
+    "Fort Lauderdale",
+    "Honolulu",
+    "Los Angeles",
+    "Miami",
+    "New York",
+    "Rome"
+  ],
+  "profile_name": "holland_america",
+  "database_name": "HAL_YIELD_OPTIMIZATION",
+  "warehouse_name": "HAL_ANALYTICS_WH",
+  "warehouse_comment": "Warehouse for HAL yield analytics",
+  "solution_title": "HAL Yield Optimization",
+  "agent_prefix": "HAL",
+  "loyalty_tier_high_sensitivity_threshold": 0.4,
+  "loyalty_tier_mid_sensitivity_threshold": 0.5,
+  "feedback_categories": [
+    "Dining",
+    "Entertainment",
+    "Service",
+    "Amenities",
+    "Excursions",
+    "Accommodations"
+  ],
+  "feedback_subcategories": [
+    "Buffet",
+    "Specialty Restaurant",
+    "Main Dining Room",
+    "Room Service",
+    "Bar Service",
+    "Wait Staff",
+    "Shows",
+    "Live Music",
+    "Nightclub",
+    "Movies",
+    "Guest Services",
+    "Concierge",
+    "Cabin Steward",
+    "Shore Excursion Desk",
+    "Pool Area",
+    "Fitness Center",
+    "Spa",
+    "Sports Deck",
+    "Casino",
+    "Suite Lounge",
+    "Beach Excursion",
+    "City Walking Tour",
+    "Cultural Tour",
+    "Snorkeling/Diving",
+    "Adventure Activity",
+    "Cabin Size",
+    "Cabin Cleanliness",
+    "Balcony",
+    "Bathroom",
+    "Bed Comfort"
+  ],
+  "feedback_templates_positive": [
+    " was fantastic - exactly what we hoped for.",
+    " exceeded all expectations. Highly recommend!"
+  ],
+  "feedback_templates_neutral": [
+    ". Average experience. Room for improvement."
+  ],
+  "feedback_templates_negative": [
+    " needs improvement. Not up to standard.",
+    " was disappointing compared to previous cruises."
+  ],
+  "onboard_spending_categories": [
+    "Spa",
+    "Dining",
+    "Casino",
+    "Shore Excursions",
+    "Shopping",
+    "Beverage Package",
+    "Internet",
+    "Photo"
+  ],
+  "service_categories": [
+    "SPA",
+    "EXCURSIONS",
+    "SPECIALTY_DINING",
+    "BEVERAGE_PACKAGE",
+    "CASINO",
+    "INTERNET",
+    "PHOTOS",
+    "SHORE_ACTIVITIES"
+  ],
+  "airlines": [
+    "American Airlines",
+    "Delta Air Lines",
+    "United Airlines",
+    "Southwest Airlines",
+    "JetBlue Airways",
+    "Alaska Airlines",
+    "Spirit Airlines",
+    "Frontier Airlines"
+  ],
+  "airline_codes": [
+    "AA",
+    "DL",
+    "UA",
+    "WN",
+    "B6",
+    "AS",
+    "NK",
+    "F9"
+  ],
+  "origin_airports": [
+    "JFK",
+    "LAX",
+    "ORD",
+    "ATL",
+    "DFW",
+    "SFO",
+    "SEA",
+    "BOS",
+    "DEN",
+    "PHX",
+    "DTW",
+    "MSP"
+  ],
+  "origin_cities": [
+    "New York",
+    "Los Angeles",
+    "Chicago",
+    "Atlanta",
+    "Dallas",
+    "San Francisco",
+    "Seattle",
+    "Boston",
+    "Denver",
+    "Phoenix",
+    "Detroit",
+    "Minneapolis"
+  ]
+}
