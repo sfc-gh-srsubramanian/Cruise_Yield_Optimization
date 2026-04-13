@@ -3,7 +3,8 @@
 # Cruise Yield Optimization - Unified Deployment Script
 # Description: Generates SQL from a profile config and deploys to Snowflake
 # Usage: ./deploy.sh <profile> [connection]
-#   profile:    cruise | royal_caribbean | norwegian
+#   profile:    Any cruise line name (e.g. cruise, royal_caribbean, norwegian, carnival, disney)
+#              Existing profiles use config/<profile>.json. New profiles are auto-generated via Cortex AI.
 #   connection: Snowflake connection name (default: "default")
 # =============================================================================
 
@@ -22,6 +23,8 @@ if [ -z "$1" ]; then
     echo "  ./deploy.sh cruise              # Generic cruise, default connection"
     echo "  ./deploy.sh royal_caribbean     # RCL profile, default connection"
     echo "  ./deploy.sh norwegian SS_CURSOR # NCL profile, specific connection"
+    echo "  ./deploy.sh carnival            # Auto-generates Carnival config via AI"
+    echo "  ./deploy.sh disney              # Auto-generates Disney config via AI"
     exit 1
 fi
 
@@ -30,13 +33,16 @@ CONNECTION="${2:-default}"
 CONFIG_FILE="$SCRIPT_DIR/config/${PROFILE}.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
-    echo "Error: Profile '$PROFILE' not found at $CONFIG_FILE"
+    echo "Profile '$PROFILE' not found. Auto-generating config using Cortex AI..."
     echo ""
-    echo "Available profiles:"
-    for f in "$SCRIPT_DIR"/config/*.json; do
-        basename "$f" .json
-    done | sed 's/^/  - /'
-    exit 1
+    python3 "$SCRIPT_DIR/generate_config.py" "$PROFILE" "$CONNECTION"
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "Config generation failed. You can create config/${PROFILE}.json manually"
+        echo "using config/cruise.json as a template."
+        exit 1
+    fi
+    echo ""
 fi
 
 # --- Step 1: Generate SQL from templates ---

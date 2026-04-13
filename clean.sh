@@ -3,7 +3,7 @@
 # Cruise Yield Optimization - Unified Teardown Script
 # Description: Drops all solution objects for a given profile
 # Usage: ./clean.sh <profile> [connection]
-#   profile:    cruise | royal_caribbean | norwegian
+#   profile:    Any cruise line name that has been deployed (must have config/<profile>.json)
 #   connection: Snowflake connection name (default: "default")
 # =============================================================================
 
@@ -26,6 +26,12 @@ CONFIG_FILE="$SCRIPT_DIR/config/${PROFILE}.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Error: Profile '$PROFILE' not found at $CONFIG_FILE"
+    echo "Only deployed profiles (with an existing config) can be cleaned."
+    echo ""
+    echo "Available profiles:"
+    for f in "$SCRIPT_DIR"/config/*.json; do
+        basename "$f" .json
+    done | sed 's/^/  - /'
     exit 1
 fi
 
