@@ -7,7 +7,7 @@
   "warehouse_name": "CRUISE_ANALYTICS_WH",
   "warehouse_comment": "Warehouse for Cruise yield analytics",
   "solution_title": "Cruise Yield Optimization",
-  "agent_prefix": "RCL",
+  "agent_prefix": "CRUISE",
   "sample_ship_1": "Harmony of the Seas",
   "sample_ship_2": "Symphony of the Seas",
   "sample_ship_class_1": "Oasis",

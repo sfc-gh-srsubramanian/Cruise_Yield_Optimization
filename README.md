@@ -1,15 +1,14 @@
 # Cruise Yield Optimization
 
-A configurable, multi-cruise-line yield optimization framework built on Snowflake.
+**Cruise Line:** Royal Caribbean International
+**Database:** `CRUISE_YIELD_OPTIMIZATION`
+**Warehouse:** `CRUISE_ANALYTICS_WH`
 
 ## Overview
 
-End-to-end yield optimization solution built on Snowflake,
+End-to-end yield optimization solution for Royal Caribbean International built on Snowflake,
 featuring medallion architecture (RAW -> CURATED -> ANALYTICS -> ML -> CLEAN_ROOM),
-semantic views with Cortex Analyst, ML pricing UDFs, Cortex Agents, and synthetic data generation.
-
-Includes config profiles for multiple cruise lines. Generate and deploy a fully branded
-solution by selecting a profile.
+semantic views with Cortex Analyst, ML pricing UDFs, and synthetic data generation.
 
 ## Architecture
 
@@ -24,8 +23,8 @@ solution by selecting a profile.
 ## Quick Start
 
 ```bash
-# Generate SQL files for a cruise line profile
-python generate.py royal_caribbean   # or: python generate.py norwegian
+# Generate SQL files for this cruise line profile
+python generate.py RCL
 
 # Deploy to Snowflake
 ./deploy.sh [CONNECTION_NAME]
@@ -34,12 +33,9 @@ python generate.py royal_caribbean   # or: python generate.py norwegian
 ./clean.sh [CONNECTION_NAME]
 ```
 
-## Available Profiles
+## Loyalty Program
 
-| Profile | Database | Loyalty Program |
-|---------|----------|-----------------|
-| `royal_caribbean` | CRUISE_YIELD_OPTIMIZATION | Crown & Anchor Society |
-| `norwegian` | NCL_YIELD_OPTIMIZATION | Latitudes Rewards |
+**Program:** Crown & Anchor Society
 
 ## Data Volume
 

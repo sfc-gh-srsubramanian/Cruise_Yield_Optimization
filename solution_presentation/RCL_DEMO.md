@@ -1,7 +1,7 @@
 # Royal Caribbean - Dynamic Yield Optimization Demo
 
 **Database:** `CRUISE_YIELD_OPTIMIZATION`
-**Snowflake Intelligence:** Open Snowflake Intelligence and select any RCL agent
+**Snowflake Intelligence:** Open Snowflake Intelligence and select any CRUISE agent
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## Act 1: Fleet Revenue Health (Yield Analyst)
 
-**Agent:** `RCL Yield Analyst`
+**Agent:** `CRUISE Yield Analyst`
 **Persona:** VP of Revenue Management
 
 > "Every Monday, our revenue team needs a pulse on fleet performance. Instead of opening 5 dashboards, they open Snowflake Intelligence and ask."
@@ -60,7 +60,7 @@ Show me seasonal yield patterns for European cruises
 
 ## Act 2: Guest Intelligence (Guest Intel)
 
-**Agent:** `RCL Guest Intel`
+**Agent:** `CRUISE Guest Intel`
 **Persona:** Director of Customer Analytics
 
 > "We maintain 360-degree profiles on every guest -- their loyalty tier, lifetime value, spending habits, preferred cabin class, booking channel, and satisfaction scores. Let's explore."
@@ -111,7 +111,7 @@ Who are the top spending guests?
 
 ## Act 3: Pricing Performance (Pricing Copilot)
 
-**Agent:** `RCL Pricing Copilot`
+**Agent:** `CRUISE Pricing Copilot`
 **Persona:** Pricing Strategy Manager
 
 > "Every price we show is an impression. Every booking is a conversion. Our Pricing Copilot analyzes this funnel across every ship, cabin class, and region."
@@ -156,7 +156,7 @@ Compare pricing performance across departure ports
 
 ## Act 4: Airline Partner Signals (Partner Insights)
 
-**Agent:** `RCL Partner Insights`
+**Agent:** `CRUISE Partner Insights`
 **Persona:** Head of Strategic Partnerships & Revenue Forecasting
 
 > "Through a secure data clean room, we receive airline demand signals -- flight search volumes, pricing trends, and capacity data for every port we operate from. This is the forward-looking indicator that tells us where demand is heading before bookings arrive."
@@ -195,7 +195,7 @@ Which ports have the highest airline demand?
 
 ## Act 5: Unified Intelligence (Yield Optimization Assistant)
 
-**Agent:** `RCL Yield Optimization Assistant`
+**Agent:** `CRUISE Yield Optimization Assistant`
 **Persona:** Chief Revenue Officer
 
 > "This agent has access to all four data sources -- yield, guests, pricing, and partner signals. It routes each question to the right tool automatically. This is how a CRO thinks."
@@ -266,11 +266,11 @@ What is the optimal price point for Balcony cabins based on historical conversio
 
 | Agent | Icon | What It Does |
 |-------|------|-------------|
-| RCL Yield Analyst | chart | Fleet yield, occupancy, revenue by ship/region |
-| RCL Guest Intel | user | Guest profiles, loyalty tiers, lifetime value, segmentation |
-| RCL Pricing Copilot | dollar | Conversion funnels, price trends, pricing recommendations |
-| RCL Partner Insights | airplane | Airline demand signals, flight pricing, anomalies |
-| RCL Yield Optimization Assistant | ship | Unified agent -- all 4 data sources, cross-domain questions |
+| CRUISE Yield Analyst | chart | Fleet yield, occupancy, revenue by ship/region |
+| CRUISE Guest Intel | user | Guest profiles, loyalty tiers, lifetime value, segmentation |
+| CRUISE Pricing Copilot | dollar | Conversion funnels, price trends, pricing recommendations |
+| CRUISE Partner Insights | airplane | Airline demand signals, flight pricing, anomalies |
+| CRUISE Yield Optimization Assistant | ship | Unified agent -- all 4 data sources, cross-domain questions |
 
 **Database:** `CRUISE_YIELD_OPTIMIZATION`
 **Ships:** Harmony of the Seas, Symphony of the Seas, Wonder of the Seas, Oasis of the Seas, Allure of the Seas, Odyssey of the Seas, Anthem of the Seas, Ovation of the Seas, Navigator of the Seas, Independence of the Seas

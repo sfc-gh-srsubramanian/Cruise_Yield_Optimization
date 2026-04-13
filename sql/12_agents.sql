@@ -10,9 +10,9 @@ USE SCHEMA CRUISE_YIELD_OPTIMIZATION.AGENTS;
 -- ---------------------------------------------------------------------------
 -- 1. YIELD ANALYST - Sailing yield metrics and revenue optimization
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE AGENT RCL_YIELD_ANALYST
+CREATE OR REPLACE AGENT CRUISE_YIELD_ANALYST
     COMMENT = 'AI analyst for sailing yield metrics, revenue optimization, and occupancy trends'
-    PROFILE = '{"display_name": "RCL Yield Analyst", "avatar": "chart"}'
+    PROFILE = '{"display_name": "CRUISE Yield Analyst", "avatar": "chart"}'
     FROM SPECIFICATION $$
 models:
   orchestration: auto
@@ -52,9 +52,9 @@ $$;
 -- ---------------------------------------------------------------------------
 -- 2. GUEST INTEL - Guest intelligence and customer segmentation
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE AGENT RCL_GUEST_INTEL
+CREATE OR REPLACE AGENT CRUISE_GUEST_INTEL
     COMMENT = 'AI assistant for guest intelligence, loyalty insights, and customer segmentation'
-    PROFILE = '{"display_name": "RCL Guest Intel", "avatar": "user"}'
+    PROFILE = '{"display_name": "CRUISE Guest Intel", "avatar": "user"}'
     FROM SPECIFICATION $$
 models:
   orchestration: auto
@@ -94,9 +94,9 @@ $$;
 -- ---------------------------------------------------------------------------
 -- 3. PRICING COPILOT - Pricing analytics and optimization
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE AGENT RCL_PRICING_COPILOT
+CREATE OR REPLACE AGENT CRUISE_PRICING_COPILOT
     COMMENT = 'AI copilot for pricing analytics, conversion rates, and competitive positioning'
-    PROFILE = '{"display_name": "RCL Pricing Copilot", "avatar": "dollar"}'
+    PROFILE = '{"display_name": "CRUISE Pricing Copilot", "avatar": "dollar"}'
     FROM SPECIFICATION $$
 models:
   orchestration: auto
@@ -136,9 +136,9 @@ $$;
 -- ---------------------------------------------------------------------------
 -- 4. PARTNER INSIGHTS - Airline demand and partner signals
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE AGENT RCL_PARTNER_INSIGHTS
+CREATE OR REPLACE AGENT CRUISE_PARTNER_INSIGHTS
     COMMENT = 'AI analyst for airline partner signals, demand correlation, and partnership optimization'
-    PROFILE = '{"display_name": "RCL Partner Insights", "avatar": "airplane"}'
+    PROFILE = '{"display_name": "CRUISE Partner Insights", "avatar": "airplane"}'
     FROM SPECIFICATION $$
 models:
   orchestration: auto
@@ -178,9 +178,9 @@ $$;
 -- ---------------------------------------------------------------------------
 -- 5. UNIFIED YIELD OPTIMIZATION AGENT - Multi-tool agent with all 4 data sources
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE AGENT RCL_YIELD_OPTIMIZATION_AGENT
+CREATE OR REPLACE AGENT CRUISE_YIELD_OPTIMIZATION_AGENT
     COMMENT = 'Unified AI assistant for RCL Dynamic Yield Optimization - covers yield analytics, guest intelligence, pricing optimization, and partner signals'
-    PROFILE = '{"display_name": "RCL Yield Optimization Assistant", "avatar": "ship"}'
+    PROFILE = '{"display_name": "CRUISE Yield Optimization Assistant", "avatar": "ship"}'
     FROM SPECIFICATION $$
 models:
   orchestration: auto
