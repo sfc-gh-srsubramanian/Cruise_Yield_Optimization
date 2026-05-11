@@ -61,36 +61,20 @@ def build_port_airport_case(ports):
     return "\n".join(lines)
 
 
-def build_cabin_price_case(cabin_classes, base_prices):
-    """Build CASE expression for ML UDFs mapping cabin class to base price."""
+def build_cabin_price_case_unescaped(cabin_classes, base_prices):
+    """Build CASE expression for ML UDFs ($$-delimited) mapping cabin class to base price."""
     lines = []
     for cabin, price in zip(cabin_classes, base_prices):
-        lines.append(f"            WHEN ''{cabin}'' THEN {price}")
-    return " ".join(lines)
+        lines.append(f"            WHEN '{cabin}' THEN {price}")
+    return "\n".join(lines)
 
 
-def build_loyalty_tier_case(tiers):
-    """Build CASE expression for ML UDFs mapping loyalty tier to multiplier."""
-    # Assign multipliers from highest to lowest tier
-    multipliers = [1.3, 1.2, 1.1, 1.0, 0.9]
-    # If more than 5 tiers, extend with 0.8, 0.7, etc.
-    while len(multipliers) < len(tiers):
-        multipliers.append(round(multipliers[-1] - 0.1, 1))
+def build_loyalty_tier_num_case(tiers):
+    """Build CASE expression mapping loyalty tier name to tier number (1-based)."""
     lines = []
-    for tier, mult in zip(reversed(tiers), multipliers):
-        lines.append(f"WHEN ''{tier}'' THEN {mult}")
-    return " ".join(lines)
-
-
-def build_loyalty_tier_case_optimal(tiers):
-    """Build CASE for GET_OPTIMAL_PRICE_RECOMMENDATION onboard spend multiplier."""
-    multipliers = [1.5, 1.3, 1.1, 1.0, 1.0]
-    while len(multipliers) < len(tiers):
-        multipliers.append(1.0)
-    lines = []
-    for tier, mult in zip(reversed(tiers), multipliers):
-        lines.append(f"WHEN ''{tier}'' THEN {mult}")
-    return " ".join(lines)
+    for i, tier in enumerate(tiers, 1):
+        lines.append(f"            WHEN '{tier}' THEN {i}")
+    return "\n".join(lines)
 
 
 def build_value_segment_case(config):
@@ -247,10 +231,9 @@ def build_replacements(config):
         "{{FLIGHT_DEST_CITIES_ARRAY}}": sql_array(config["flight_dest_cities"]),
         "{{NUM_DEST_AIRPORTS}}": str(num_dest_airports),
 
-        # ML UDF CASE expressions
-        "{{CABIN_PRICE_CASE}}": build_cabin_price_case(cabin_classes, base_prices),
-        "{{LOYALTY_TIER_CASE}}": build_loyalty_tier_case(tiers),
-        "{{LOYALTY_TIER_CASE_OPTIMAL}}": build_loyalty_tier_case_optimal(tiers),
+        # ML UDF CASE expressions ($$-delimited, no double-escaping needed)
+        "{{CABIN_PRICE_CASE_UNESCAPED}}": build_cabin_price_case_unescaped(cabin_classes, base_prices),
+        "{{LOYALTY_TIER_NUM_CASE}}": build_loyalty_tier_num_case(tiers),
 
         # GUEST_360 VALUE_SEGMENT
         "{{VALUE_SEGMENT_CASE}}": build_value_segment_case(config),

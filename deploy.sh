@@ -82,6 +82,7 @@ SQL_FILES=(
     "11_load_data.sql"
     "12_agents.sql"
     "13_register_si.sql"
+    "14_ml_training.sql"
 )
 
 for sql_file in "${SQL_FILES[@]}"; do

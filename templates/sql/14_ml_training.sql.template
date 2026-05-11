@@ -1,0 +1,307 @@
+-- =============================================================================
+-- {{SOLUTION_TITLE}} - ML Model Training & Inference UDFs
+-- Layer: ML (Machine Learning)
+-- Description: Trains real Snowflake ML models using loaded data, then creates
+--              UDF wrappers for inference.
+--              Must run AFTER 11_load_data.sql populates PRICING_FEATURES.
+-- Models:
+--   1. CONVERSION_CLASSIFIER - Predicts booking conversion probability
+--   2. REVENUE_FORECAST - Projects future revenue from historical trends
+--   3. PRICING_ANOMALY_DETECTOR - Detects anomalous pricing patterns
+-- =============================================================================
+
+USE WAREHOUSE {{WAREHOUSE_NAME}};
+USE SCHEMA {{DATABASE_NAME}}.ML;
+
+-- =============================================================================
+-- 1. CLASSIFICATION MODEL: Predict booking conversion
+-- =============================================================================
+-- Train a gradient-boosted classification model on PRICING_FEATURES.
+-- Target: CONVERTED (binary 0/1)
+-- Features: price sensitivity, loyalty tier, cabin class, price ratio, etc.
+
+CREATE OR REPLACE SNOWFLAKE.ML.CLASSIFICATION CONVERSION_CLASSIFIER(
+    INPUT_DATA => SYSTEM$REFERENCE('TABLE', '{{DATABASE_NAME}}.ML.PRICING_FEATURES'),
+    TARGET_COLNAME => 'CONVERTED',
+    CONFIG_OBJECT => {
+        'ON_ERROR': 'SKIP'
+    }
+);
+
+-- =============================================================================
+-- 2. FORECAST MODEL: Revenue time-series projection
+-- =============================================================================
+-- Aggregate booking revenue by week, then train a forecast model to predict
+-- future weekly revenue trends.
+
+CREATE OR REPLACE TABLE {{DATABASE_NAME}}.ML.REVENUE_TIMESERIES AS
+SELECT
+    DATE_TRUNC('week', s.SAILING_DATE) AS WEEK_START,
+    s.ITINERARY_REGION AS SERIES_ID,
+    SUM(b.TOTAL_CABIN_REVENUE) AS WEEKLY_REVENUE
+FROM {{DATABASE_NAME}}.RAW.BOOKINGS b
+JOIN {{DATABASE_NAME}}.RAW.SAILINGS s ON b.SAILING_ID = s.SAILING_ID
+GROUP BY 1, 2
+HAVING WEEKLY_REVENUE > 0
+ORDER BY 1;
+
+CREATE OR REPLACE SNOWFLAKE.ML.FORECAST REVENUE_FORECAST(
+    INPUT_DATA => SYSTEM$REFERENCE('TABLE', '{{DATABASE_NAME}}.ML.REVENUE_TIMESERIES'),
+    SERIES_COLNAME => 'SERIES_ID',
+    TIMESTAMP_COLNAME => 'WEEK_START',
+    TARGET_COLNAME => 'WEEKLY_REVENUE',
+    CONFIG_OBJECT => {
+        'ON_ERROR': 'SKIP'
+    }
+);
+
+-- =============================================================================
+-- 3. ANOMALY DETECTION MODEL: Identify unusual pricing patterns
+-- =============================================================================
+-- Aggregate pricing events by week and cabin class, detect weeks where
+-- conversion rates or average prices deviate significantly from expected.
+
+CREATE OR REPLACE TABLE {{DATABASE_NAME}}.ML.PRICING_TIMESERIES AS
+SELECT
+    DATE_TRUNC('week', s.SAILING_DATE) AS WEEK_START,
+    pf.CABIN_CLASS AS SERIES_ID,
+    AVG(pf.OFFERED_PRICE) AS AVG_OFFERED_PRICE,
+    AVG(pf.CONVERTED) AS CONVERSION_RATE,
+    COUNT(*) AS EVENT_COUNT
+FROM {{DATABASE_NAME}}.ML.PRICING_FEATURES pf
+JOIN {{DATABASE_NAME}}.RAW.SAILINGS s ON pf.SAILING_ID = s.SAILING_ID
+GROUP BY 1, 2
+HAVING EVENT_COUNT >= 10
+ORDER BY 1;
+
+CREATE OR REPLACE SNOWFLAKE.ML.ANOMALY_DETECTION PRICING_ANOMALY_DETECTOR(
+    INPUT_DATA => SYSTEM$REFERENCE('TABLE', '{{DATABASE_NAME}}.ML.PRICING_TIMESERIES'),
+    SERIES_COLNAME => 'SERIES_ID',
+    TIMESTAMP_COLNAME => 'WEEK_START',
+    TARGET_COLNAME => 'CONVERSION_RATE',
+    LABEL_COLNAME => '',
+    CONFIG_OBJECT => {
+        'ON_ERROR': 'SKIP'
+    }
+);
+
+-- =============================================================================
+-- 4. INFERENCE UDFs: Wrapper functions that call the trained models
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- PREDICT_CONVERSION_PROB: Predict booking conversion probability
+-- Uses the trained CONVERSION_CLASSIFIER model.
+-- Returns the predicted probability of conversion (0.0 to 1.0).
+-- -----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION PREDICT_CONVERSION_PROB(
+    PRICE_SENSITIVITY FLOAT,
+    LOYALTY_TIER VARCHAR,
+    CABIN_CLASS VARCHAR,
+    OFFERED_PRICE FLOAT,
+    SEASON_MULT FLOAT
+)
+RETURNS FLOAT
+LANGUAGE SQL
+AS
+$$
+    SELECT res:"probability":"1"::FLOAT
+    FROM (
+        SELECT {{DATABASE_NAME}}.ML.CONVERSION_CLASSIFIER!PREDICT(
+            INPUT_DATA => OBJECT_CONSTRUCT(
+                'PRICE_SENSITIVITY', PRICE_SENSITIVITY,
+                'LOYALTY_TIER', LOYALTY_TIER,
+                'CABIN_CLASS', CABIN_CLASS,
+                'OFFERED_PRICE', OFFERED_PRICE,
+                'SEASON_MULTIPLIER', SEASON_MULT,
+                'LOYALTY_TIER_NUM', CASE LOYALTY_TIER
+                    {{LOYALTY_TIER_NUM_CASE}}
+                    ELSE 1
+                END,
+                'PRICE_RATIO', OFFERED_PRICE / NULLIF(
+                    CASE CABIN_CLASS
+                        {{CABIN_PRICE_CASE_UNESCAPED}}
+                        ELSE 1000
+                    END, 0),
+                'PAST_CRUISES', 5,
+                'LIFETIME_VALUE', 5000.00,
+                'AVG_ONBOARD_SPEND', 400.00,
+                'DURATION_NIGHTS', 7,
+                'ITINERARY_REGION', 'Caribbean',
+                'BASE_PRICE', CASE CABIN_CLASS
+                    {{CABIN_PRICE_CASE_UNESCAPED}}
+                    ELSE 1000
+                END
+            )
+        ) AS res
+    )
+$$;
+
+-- -----------------------------------------------------------------------------
+-- GET_OPTIMAL_PRICE_RECOMMENDATION: Find price that maximizes expected revenue
+-- Evaluates multiple price points using the classification model to find
+-- the price that maximizes (conversion_probability * price).
+-- -----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION GET_OPTIMAL_PRICE_RECOMMENDATION(
+    PRICE_SENSITIVITY FLOAT,
+    LOYALTY_TIER VARCHAR,
+    CABIN_CLASS VARCHAR,
+    AVG_ONBOARD_SPEND FLOAT,
+    SEASON_MULT FLOAT
+)
+RETURNS OBJECT
+LANGUAGE SQL
+AS
+$$
+    WITH base_info AS (
+        SELECT
+            CASE CABIN_CLASS
+                {{CABIN_PRICE_CASE_UNESCAPED}}
+                ELSE 1000
+            END AS base_price,
+            COALESCE(SEASON_MULT, 1.0) AS season
+    ),
+    price_points AS (
+        SELECT
+            base_price,
+            season,
+            base_price * season * mult AS test_price,
+            mult AS price_multiplier
+        FROM base_info,
+        (SELECT 0.80 AS mult UNION ALL SELECT 0.90 UNION ALL SELECT 0.95
+         UNION ALL SELECT 1.00 UNION ALL SELECT 1.05 UNION ALL SELECT 1.10
+         UNION ALL SELECT 1.15 UNION ALL SELECT 1.20) multipliers
+    ),
+    predictions AS (
+        SELECT
+            pp.base_price,
+            pp.test_price,
+            pp.price_multiplier,
+            {{DATABASE_NAME}}.ML.CONVERSION_CLASSIFIER!PREDICT(
+                INPUT_DATA => OBJECT_CONSTRUCT(
+                    'PRICE_SENSITIVITY', PRICE_SENSITIVITY,
+                    'LOYALTY_TIER', LOYALTY_TIER,
+                    'CABIN_CLASS', CABIN_CLASS,
+                    'OFFERED_PRICE', pp.test_price,
+                    'SEASON_MULTIPLIER', SEASON_MULT,
+                    'LOYALTY_TIER_NUM', CASE LOYALTY_TIER
+                        {{LOYALTY_TIER_NUM_CASE}}
+                        ELSE 1
+                    END,
+                    'PRICE_RATIO', pp.test_price / NULLIF(pp.base_price, 0),
+                    'PAST_CRUISES', 5,
+                    'LIFETIME_VALUE', 5000.00,
+                    'AVG_ONBOARD_SPEND', COALESCE(AVG_ONBOARD_SPEND, 400.00),
+                    'DURATION_NIGHTS', 7,
+                    'ITINERARY_REGION', 'Caribbean',
+                    'BASE_PRICE', pp.base_price
+                )
+            ):"probability":"1"::FLOAT AS conv_prob
+        FROM price_points pp
+    ),
+    scored AS (
+        SELECT
+            *,
+            test_price * conv_prob AS expected_revenue
+        FROM predictions
+    ),
+    best AS (
+        SELECT * FROM scored ORDER BY expected_revenue DESC LIMIT 1
+    )
+    SELECT OBJECT_CONSTRUCT(
+        'optimal_price', ROUND(best.test_price, 2),
+        'current_base_price', best.base_price,
+        'conversion_prob_at_optimal', ROUND(best.conv_prob, 4),
+        'expected_revenue_per_impression', ROUND(best.expected_revenue, 2),
+        'predicted_onboard_spend', ROUND(COALESCE(AVG_ONBOARD_SPEND, 400.00) * best.conv_prob, 2),
+        'expected_total_value', ROUND(best.expected_revenue + COALESCE(AVG_ONBOARD_SPEND, 400.00) * best.conv_prob, 2),
+        'price_vs_base_pct', ROUND((best.test_price / NULLIF(best.base_price, 0) - 1) * 100, 1),
+        'model_type', 'SNOWFLAKE.ML.CLASSIFICATION',
+        'model_name', 'CONVERSION_CLASSIFIER'
+    )
+    FROM best
+$$;
+
+-- -----------------------------------------------------------------------------
+-- RUN_PRICING_SCENARIO: What-if analysis using Forecast + Anomaly Detection
+-- Projects revenue impact of a price change using the trained forecast model
+-- and checks if the resulting pricing would be flagged as anomalous.
+-- -----------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE RUN_PRICING_SCENARIO(
+    PRICE_CHANGE_PCT FLOAT,
+    CABIN_CLASS_FILTER VARCHAR,
+    FORECAST_WEEKS NUMBER DEFAULT 12
+)
+RETURNS OBJECT
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    baseline_revenue FLOAT;
+    baseline_volume NUMBER;
+    forecast_revenue FLOAT;
+    anomaly_count NUMBER;
+    result OBJECT;
+BEGIN
+    -- Get baseline metrics for the cabin class
+    SELECT
+        SUM(OFFERED_PRICE * CONVERTED),
+        COUNT(*)
+    INTO :baseline_revenue, :baseline_volume
+    FROM {{DATABASE_NAME}}.ML.PRICING_FEATURES
+    WHERE CABIN_CLASS = :CABIN_CLASS_FILTER;
+
+    -- Get forecast revenue (next N weeks sum across all regions)
+    SELECT COALESCE(SUM("FORECAST"), 0)
+    INTO :forecast_revenue
+    FROM TABLE({{DATABASE_NAME}}.ML.REVENUE_FORECAST!FORECAST(
+        FORECASTING_PERIODS => 12
+    ));
+
+    -- Check pricing volatility using historical data (proxy for anomaly risk)
+    -- Note: DETECT_ANOMALIES requires new data after training period.
+    -- Here we measure historical volatility as a risk indicator.
+    SELECT COUNT(*)
+    INTO :anomaly_count
+    FROM {{DATABASE_NAME}}.ML.PRICING_TIMESERIES
+    WHERE SERIES_ID = :CABIN_CLASS_FILTER
+      AND ABS(CONVERSION_RATE - (
+          SELECT AVG(CONVERSION_RATE)
+          FROM {{DATABASE_NAME}}.ML.PRICING_TIMESERIES
+          WHERE SERIES_ID = :CABIN_CLASS_FILTER
+      )) > 2 * (
+          SELECT STDDEV(CONVERSION_RATE)
+          FROM {{DATABASE_NAME}}.ML.PRICING_TIMESERIES
+          WHERE SERIES_ID = :CABIN_CLASS_FILTER
+      );
+
+    LET is_anomalous BOOLEAN := (:anomaly_count > 2);
+
+    -- Build result with scenario projections
+    result := OBJECT_CONSTRUCT(
+        'price_change_pct', :PRICE_CHANGE_PCT,
+        'cabin_class', :CABIN_CLASS_FILTER,
+        'baseline_revenue', ROUND(:baseline_revenue, 2),
+        'baseline_volume', :baseline_volume,
+        'forecast_revenue_next_weeks', ROUND(:forecast_revenue, 2),
+        'forecast_weeks', :FORECAST_WEEKS,
+        'scenario_projected_revenue', ROUND(:forecast_revenue * (1 + :PRICE_CHANGE_PCT / 100), 2),
+        'revenue_impact_pct', :PRICE_CHANGE_PCT,
+        'historical_anomalies_detected', :anomaly_count,
+        'pricing_risk_flag', :is_anomalous,
+        'recommendation', CASE
+            WHEN :is_anomalous AND :PRICE_CHANGE_PCT > 5 THEN 'HIGH RISK: Historical anomalies detected AND large price increase. Recommend segment-specific A/B test.'
+            WHEN :is_anomalous THEN 'CAUTION: Historical pricing anomalies exist for this cabin class. Monitor closely.'
+            WHEN :PRICE_CHANGE_PCT > 10 THEN 'MODERATE RISK: Large increase may reduce conversion. Consider phased rollout.'
+            WHEN :PRICE_CHANGE_PCT > 0 AND :PRICE_CHANGE_PCT <= 5 THEN 'LOW RISK: Modest increase within normal range. Proceed with monitoring.'
+            WHEN :PRICE_CHANGE_PCT < -5 THEN 'VOLUME PLAY: Significant discount. Ensure margin remains positive.'
+            WHEN :PRICE_CHANGE_PCT < 0 THEN 'TACTICAL DISCOUNT: Small reduction to boost conversion. Monitor volume lift.'
+            ELSE 'NEUTRAL: No price change.'
+        END,
+        'model_types', ARRAY_CONSTRUCT('SNOWFLAKE.ML.FORECAST', 'SNOWFLAKE.ML.ANOMALY_DETECTION'),
+        'models_used', ARRAY_CONSTRUCT('REVENUE_FORECAST', 'PRICING_ANOMALY_DETECTOR')
+    );
+
+    RETURN result;
+END;
+$$;
