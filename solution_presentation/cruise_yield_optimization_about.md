@@ -38,11 +38,16 @@ GUEST_FLIGHTS and GUEST_SERVICES tables store enriched flight and service transa
 - 4 basic semantic views + 4 Cortex Analyst semantic views with verified queries (18 total), sample values, and onboarding questions.
 - `CORTEX_ANALYST_QUERY`: Table function wrapping SNOWFLAKE.CORTEX.COMPLETE for natural language SQL generation.
 
-**ML** -- 1 feature table, 3 SQL UDFs
+**ML** -- 3 feature/staging tables, 3 trained ML models, 3 inference UDFs
 - `PRICING_FEATURES`: 17-column feature-engineered table (1M rows) for model training.
-- `PREDICT_CONVERSION_PROB(FLOAT, VARCHAR, VARCHAR, FLOAT, FLOAT) -> FLOAT`: Booking conversion probability (0.05-0.95) factoring price sensitivity, loyalty tier, cabin class, offered price, and seasonality.
-- `GET_OPTIMAL_PRICE_RECOMMENDATION(...) -> OBJECT`: Returns optimal price, predicted onboard spend, expected total value, conversion probability, and confidence score.
-- `RUN_PRICING_SCENARIO_SIMPLE(FLOAT, FLOAT, NUMBER) -> OBJECT`: What-if analysis returning scenario revenue, volume impact, and recommendation text.
+- `REVENUE_TIMESERIES`: Weekly revenue aggregated by region for forecast training.
+- `PRICING_TIMESERIES`: Weekly conversion rates by cabin class for anomaly detection training.
+- **CONVERSION_CLASSIFIER** (`SNOWFLAKE.ML.CLASSIFICATION`): Gradient-boosted model trained on 1M pricing events. Predicts booking conversion probability (0.0-1.0) based on price sensitivity, loyalty tier, cabin class, offered price, season, and price ratio.
+- **REVENUE_FORECAST** (`SNOWFLAKE.ML.FORECAST`): Time-series model trained on weekly revenue by region. Projects future revenue for what-if scenario planning.
+- **PRICING_ANOMALY_DETECTOR** (`SNOWFLAKE.ML.ANOMALY_DETECTION`): Trained on weekly conversion rates by cabin class. Identifies periods of unusual pricing volatility.
+- `PREDICT_CONVERSION_PROB(FLOAT, VARCHAR, VARCHAR, FLOAT, FLOAT) -> FLOAT`: Calls CONVERSION_CLASSIFIER!PREDICT for real ML inference. Returns trained model's predicted conversion probability.
+- `GET_OPTIMAL_PRICE_RECOMMENDATION(...) -> OBJECT`: Evaluates 8 price points (0.8x-1.2x base) through the classification model. Returns optimal price, expected revenue per impression, conversion probability, and predicted onboard spend.
+- `RUN_PRICING_SCENARIO(FLOAT, VARCHAR, NUMBER) -> OBJECT`: Uses REVENUE_FORECAST for projected revenue under price changes and historical volatility analysis for risk assessment. Returns scenario revenue, anomaly count, risk flag, and recommendation.
 
 **CLEAN_ROOM** -- 1 synthetic view
 - `V_AIRLINE_DEMAND`: GENERATOR-based view producing 91-day rolling airline demand signals (price index, demand score, seat availability, anomaly detection) using deterministic HASH-based randomization.
@@ -54,8 +59,8 @@ The GUEST_360 Cortex Analyst semantic view is the most complex, spanning 5 table
 ### Deployment
 
 ```bash
-./deploy.sh [CONNECTION_NAME]   # Deploys all 11 SQL files in order
-./clean.sh [CONNECTION_NAME]    # Drops database + warehouse
+./deploy.sh <profile> [CONNECTION_NAME]   # Deploys all 14 SQL files in order
+./clean.sh <profile> [CONNECTION_NAME]    # Drops database + warehouse
 ```
 
-Requires Snowflake account with ACCOUNTADMIN role and SnowCLI (`snow`) installed. Single Medium warehouse (`CRUISE_ANALYTICS_WH`) handles all workloads.
+Requires Snowflake account with ACCOUNTADMIN role and SnowCLI (`snow`) installed. Single Medium warehouse handles all workloads including ML model training.

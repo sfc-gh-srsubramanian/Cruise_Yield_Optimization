@@ -66,7 +66,7 @@ Deploying this solution delivers measurable outcomes across four value drivers:
 Unified yield analytics across cabin, onboard, and pre-cruise revenue streams enable pricing teams to optimize for total guest value, not just cabin ticket price. Ships with integrated yield views consistently outperform by $340+ per passenger cruise day.
 
 ### Conversion Improvement: +12-18% Booking Conversion Rate
-ML-driven conversion probability scoring (PREDICT_CONVERSION_PROB) identifies the optimal price point for each guest segment and cabin class combination. Price sensitivity-aware recommendations replace one-size-fits-all pricing.
+ML-driven conversion probability scoring via SNOWFLAKE.ML.CLASSIFICATION identifies the optimal price point for each guest segment and cabin class combination. The trained model evaluates real feature interactions (price sensitivity × loyalty × season × price ratio) rather than static rules, enabling price sensitivity-aware recommendations that replace one-size-fits-all pricing.
 
 ### Onboard Revenue Capture: +8-15% Onboard Spend per Sailing
 Guest 360 value segmentation enables targeted upsell strategies. High-Value Low-Sensitivity guests receive premium experience offers; Mid-Value Growth-Potential guests receive bundled packages designed to increase total cruise value.
@@ -84,7 +84,7 @@ Natural language querying via Cortex Analyst eliminates the analyst bottleneck. 
 A single medallion architecture (RAW -> CURATED -> ANALYTICS -> ML) eliminates the six-system fragmentation problem. Guest profiles, bookings, spending, feedback, and partner signals join seamlessly through curated views like GUEST_360 -- one platform, one source of truth.
 
 ### Native AI/ML
-SQL UDFs for pricing prediction, optimal price recommendation, and scenario analysis run directly where the data lives. No data movement, no external ML infrastructure. PREDICT_CONVERSION_PROB scores 500K guests in seconds, not hours.
+Snowflake ML Functions train and serve models directly where the data lives. CONVERSION_CLASSIFIER (SNOWFLAKE.ML.CLASSIFICATION) trains on 1M pricing events and predicts conversion probability in real-time. REVENUE_FORECAST (SNOWFLAKE.ML.FORECAST) projects weekly revenue trends. PRICING_ANOMALY_DETECTOR (SNOWFLAKE.ML.ANOMALY_DETECTION) identifies volatility. No data movement, no external ML infrastructure, no model hosting -- just CREATE SNOWFLAKE.ML.CLASSIFICATION and call MODEL!PREDICT.
 
 ### Secure Data Collaboration
 Clean room capabilities enable airline partner signal integration without exposing raw data. V_AIRLINE_DEMAND delivers pricing intelligence from partner airlines while maintaining data sovereignty for both parties.
@@ -103,7 +103,7 @@ Eight source tables land in the RAW bronze layer: sailings, guests, bookings, on
 The CURATED silver layer transforms raw data into analytics-ready assets. GUEST_360 joins guest profiles with booking history, spending patterns, service usage, flight data, and feedback into a single unified view with value segmentation (6 segments based on loyalty tier and price sensitivity).
 
 ### Step 3: Analyze and Predict
-The ANALYTICS gold layer computes V_SAILING_YIELD (net yield per APCD with occupancy rates) and V_PRICING_PERFORMANCE (conversion rates by ship, cabin, region). ML UDFs predict conversion probability and recommend optimal prices per guest segment.
+The ANALYTICS gold layer computes V_SAILING_YIELD (net yield per APCD with occupancy rates) and V_PRICING_PERFORMANCE (conversion rates by ship, cabin, region). Three Snowflake ML models are trained automatically: a Classification model predicts conversion probability, a Forecast model projects future revenue, and an Anomaly Detection model flags pricing volatility. Inference UDFs wrap these models for real-time scoring.
 
 ### Step 4: Query and Act
 Four Cortex Analyst semantic views (YIELD_ANALYTICS, PRICING_ANALYTICS, GUEST_360, PARTNER_SIGNALS) with 18 verified queries enable natural language access. Revenue managers ask questions directly; pricing analysts run what-if scenarios in seconds.
