@@ -40,9 +40,9 @@ NARRATOR: "Eight-point-eight million rows of operational data flow through a fou
 
 NARRATOR: "A Guest 360 view segments every passenger by lifetime value and price sensitivity. A Diamond loyalty member who spends two thousand dollars onboard is no longer priced the same as a first-time budget cruiser."
 
-**[On screen: ML UDF returning optimal price recommendation]**
+**[On screen: ML model prediction returning optimal price recommendation]**
 
-NARRATOR: "Machine learning UDFs predict conversion probability and recommend the optimal price for each guest and cabin combination. Not in hours. In seconds."
+NARRATOR: "Snowflake ML Functions -- Classification, Forecast, and Anomaly Detection -- train directly on the data and predict conversion probability for each guest and cabin combination. Not in hours. In seconds."
 
 **[On screen: Natural language query -> instant chart result]**
 
@@ -81,7 +81,7 @@ NARRATOR: "One platform. One command to deploy. Every revenue signal, working to
 
 [excited] A Guest three-sixty view segments every passenger by lifetime value and price sensitivity. A Diamond loyalty member who spends two thousand dollars onboard… is no longer priced the same as a first-time budget cruiser.
 
-[emphatic] Machine learning functions predict conversion probability and recommend the OPTIMAL price for each guest and cabin combination. Not in hours. In SECONDS.
+[emphatic] Snowflake M-L Functions… Classification, Forecast, and Anomaly Detection… train directly on the data and recommend the OPTIMAL price for each guest and cabin combination. Not in hours. In SECONDS.
 
 [warm] And revenue managers query it all in plain English through Cortex Analyst. No S-Q-L. No analyst bottleneck. Answers in seconds.
 

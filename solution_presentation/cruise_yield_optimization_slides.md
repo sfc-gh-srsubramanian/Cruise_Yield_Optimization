@@ -68,7 +68,7 @@ A four-layer medallion architecture within a single Snowflake database:
 - **Ingest**: 8 source tables, 8.8M+ rows of operational data (bookings, spending, guests, feedback, partner signals)
 - **Curate**: Guest 360 unified profile with value segmentation, enriched booking views
 - **Analyze**: Net yield per APCD, pricing conversion analytics, 8 semantic views
-- **Predict**: ML UDFs for conversion probability, optimal pricing, and what-if scenarios
+- **Predict**: Snowflake ML Functions (Classification, Forecast, Anomaly Detection) for real model-driven pricing
 
 No external infrastructure. No data movement. Everything runs where the data lives.
 
@@ -84,7 +84,7 @@ No external infrastructure. No data movement. Everything runs where the data liv
 
 **Step 3 - Analyze**: V_SAILING_YIELD computes net yield per APCD across all revenue streams. V_PRICING_PERFORMANCE tracks conversion rates by ship, cabin, region.
 
-**Step 4 - Predict & Act**: PREDICT_CONVERSION_PROB scores each guest-cabin-price combination. GET_OPTIMAL_PRICE_RECOMMENDATION returns the right price for the right guest. Revenue managers query via natural language through Cortex Analyst.
+**Step 4 - Predict & Act**: A trained SNOWFLAKE.ML.CLASSIFICATION model (CONVERSION_CLASSIFIER) scores each guest-cabin-price combination in real-time. GET_OPTIMAL_PRICE_RECOMMENDATION evaluates 8 price points through the model to find the revenue-maximizing price. REVENUE_FORECAST projects future revenue for scenario planning. Revenue managers query via natural language through Cortex Analyst.
 
 *Visual: Architecture diagram with step callouts*
 
@@ -124,10 +124,10 @@ The data is clear: unified yield management is the highest-leverage investment i
 **What you get:**
 - Single Snowflake database with complete medallion architecture
 - 8.8M+ rows of operational data flowing through 4 layers
-- 3 ML UDFs for pricing intelligence (conversion prediction, optimal price, scenario analysis)
+- 3 trained Snowflake ML models (Classification, Forecast, Anomaly Detection) with inference UDFs
 - 8 semantic views with Cortex Analyst for natural language access
 - Clean room integration for airline partner signals
-- One-command deployment (`./deploy.sh`)
+- One-command deployment (`./deploy.sh <profile>`)
 
 **What you need:**
 - Snowflake account with ACCOUNTADMIN
