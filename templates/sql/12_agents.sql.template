@@ -186,7 +186,7 @@ models:
   orchestration: auto
 instructions:
   response: 'Provide clear, actionable insights for cruise line revenue management. Format data with tables when appropriate. Highlight key metrics and trends. Be concise but thorough.'
-  orchestration: 'You are an AI assistant for {{CRUISE_LINE}}''s Dynamic Yield Optimization platform. Route queries to the appropriate tool based on content: Use yield_analytics for occupancy, net yield, booking velocity, and revenue forecasts. Use guest_360 for customer profiles, lifetime value, loyalty, and spending patterns. Use pricing_analytics for conversion rates, price elasticity, and revenue per impression. Use partner_signals for airline data, flight pricing, and partner demand signals.'
+  orchestration: 'You are an AI assistant for {{CRUISE_LINE}}''s Dynamic Yield Optimization platform. Route queries to the appropriate tool based on content: Use yield_analytics for occupancy, net yield, booking velocity, and revenue forecasts. Use guest_360 for customer profiles, lifetime value, loyalty, and spending patterns. Use pricing_analytics for conversion rates, price elasticity, and revenue per impression. Use partner_signals for airline data, flight pricing, and partner demand signals. Use ml_pricing for ML model predictions including predicted conversion probability, optimal price recommendations, and comparisons of ML-predicted vs historical conversion rates by cabin class and loyalty tier.'
   sample_questions:
     - question: 'What is the conversion rate by cabin class?'
     - question: 'Give me pricing recommendations for {{SAMPLE_SHIP_1}} by cabin class'
@@ -203,6 +203,9 @@ instructions:
     - question: 'Which origin cities have guests with the highest lifetime value?'
     - question: 'Which cabin classes are overpriced relative to their conversion performance?'
     - question: 'What is the optimal price point for {{SAMPLE_CABIN_MID}} cabins based on historical conversion patterns?'
+    - question: 'What does the ML model predict for conversion probability by cabin class and loyalty tier?'
+    - question: 'Which segments have ML-predicted conversion higher than historical -- where are we leaving money on the table?'
+    - question: 'What is the ML-recommended optimal price for {{SAMPLE_CABIN_TOP}} cabins?'
 tools:
   - tool_spec:
       type: cortex_analyst_text_to_sql
@@ -220,6 +223,10 @@ tools:
       type: cortex_analyst_text_to_sql
       name: partner_signals
       description: 'Query airline and travel partner demand signals including flight pricing, capacity utilization, and anomaly detection.'
+  - tool_spec:
+      type: cortex_analyst_text_to_sql
+      name: ml_pricing
+      description: 'Query ML model predictions for pricing intelligence including predicted conversion probability, optimal price recommendations, and comparison of ML-predicted vs historical conversion rates by cabin class and loyalty tier.'
 tool_resources:
   yield_analytics:
     semantic_view: '{{DATABASE_NAME}}.ANALYTICS.YIELD_ANALYTICS'
@@ -238,6 +245,11 @@ tool_resources:
       warehouse: '{{WAREHOUSE_NAME}}'
   partner_signals:
     semantic_view: '{{DATABASE_NAME}}.ANALYTICS.PARTNER_SIGNALS'
+    execution_environment:
+      type: warehouse
+      warehouse: '{{WAREHOUSE_NAME}}'
+  ml_pricing:
+    semantic_view: '{{DATABASE_NAME}}.ANALYTICS.ML_PRICING_INTELLIGENCE_SV'
     execution_environment:
       type: warehouse
       warehouse: '{{WAREHOUSE_NAME}}'

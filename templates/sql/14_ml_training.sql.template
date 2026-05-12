@@ -305,3 +305,84 @@ BEGIN
     RETURN result;
 END;
 $$;
+
+-- =============================================================================
+-- 5. ML-POWERED ANALYTICS VIEW: Pricing Intelligence
+-- =============================================================================
+-- Pre-scores each cabin class x loyalty tier combination through the trained
+-- classification model so agents can query ML predictions via semantic views.
+
+USE SCHEMA {{DATABASE_NAME}}.ANALYTICS;
+
+CREATE OR REPLACE TABLE ML_PRICING_SCORES AS
+WITH cabin_tier_combos AS (
+    SELECT
+        pf.CABIN_CLASS,
+        pf.LOYALTY_TIER,
+        ROUND(AVG(pf.PRICE_SENSITIVITY), 2) AS avg_price_sensitivity,
+        ROUND(AVG(pf.OFFERED_PRICE), 2) AS avg_offered_price,
+        ROUND(AVG(pf.SEASON_MULTIPLIER), 2) AS avg_season_multiplier,
+        ROUND(AVG(pf.AVG_ONBOARD_SPEND), 2) AS avg_onboard_spend,
+        COUNT(*) AS sample_size,
+        ROUND(AVG(pf.CONVERTED), 4) AS historical_conversion_rate
+    FROM {{DATABASE_NAME}}.ML.PRICING_FEATURES pf
+    GROUP BY pf.CABIN_CLASS, pf.LOYALTY_TIER
+)
+SELECT
+    ctc.CABIN_CLASS,
+    ctc.LOYALTY_TIER,
+    ctc.avg_price_sensitivity,
+    ctc.avg_offered_price,
+    ctc.avg_season_multiplier,
+    ctc.avg_onboard_spend,
+    ctc.sample_size,
+    ctc.historical_conversion_rate,
+    {{DATABASE_NAME}}.ML.PREDICT_CONVERSION_PROB(
+        ctc.avg_price_sensitivity,
+        ctc.LOYALTY_TIER,
+        ctc.CABIN_CLASS,
+        ctc.avg_offered_price,
+        ctc.avg_season_multiplier
+    ) AS ml_predicted_conversion,
+    ROUND({{DATABASE_NAME}}.ML.PREDICT_CONVERSION_PROB(
+        ctc.avg_price_sensitivity,
+        ctc.LOYALTY_TIER,
+        ctc.CABIN_CLASS,
+        ctc.avg_offered_price,
+        ctc.avg_season_multiplier
+    ) - ctc.historical_conversion_rate, 4) AS conversion_gap,
+    CASE
+        WHEN {{DATABASE_NAME}}.ML.PREDICT_CONVERSION_PROB(
+            ctc.avg_price_sensitivity, ctc.LOYALTY_TIER, ctc.CABIN_CLASS,
+            ctc.avg_offered_price, ctc.avg_season_multiplier
+        ) > ctc.historical_conversion_rate + 0.03 THEN 'UNDERPRICED - raise price to capture margin'
+        WHEN {{DATABASE_NAME}}.ML.PREDICT_CONVERSION_PROB(
+            ctc.avg_price_sensitivity, ctc.LOYALTY_TIER, ctc.CABIN_CLASS,
+            ctc.avg_offered_price, ctc.avg_season_multiplier
+        ) < ctc.historical_conversion_rate - 0.03 THEN 'OVERPRICED - reduce price to boost volume'
+        ELSE 'WELL PRICED - maintain current pricing'
+    END AS pricing_action
+FROM cabin_tier_combos ctc;
+
+-- =============================================================================
+-- 6. SEMANTIC VIEW: ML Pricing Intelligence (for Cortex Analyst / Agents)
+-- =============================================================================
+
+CREATE OR REPLACE SEMANTIC VIEW ML_PRICING_INTELLIGENCE_SV
+    TABLES (
+        PREDICTIONS AS {{DATABASE_NAME}}.ANALYTICS.ML_PRICING_SCORES
+    )
+    DIMENSIONS (
+        PREDICTIONS.CABIN_CLASS AS cabin_class COMMENT = 'Cabin category (e.g. Inside, Balcony, Suite)',
+        PREDICTIONS.LOYALTY_TIER AS loyalty_tier COMMENT = 'Guest loyalty tier',
+        PREDICTIONS.PRICING_ACTION AS pricing_action COMMENT = 'ML-recommended action: UNDERPRICED, OVERPRICED, or WELL PRICED'
+    )
+    METRICS (
+        PREDICTIONS.ML_PREDICTED_CONVERSION AS AVG(ml_predicted_conversion) COMMENT = 'ML model predicted conversion probability (0-1)',
+        PREDICTIONS.HISTORICAL_CONVERSION_RATE AS AVG(historical_conversion_rate) COMMENT = 'Historical actual conversion rate for comparison',
+        PREDICTIONS.CONVERSION_GAP AS AVG(conversion_gap) COMMENT = 'Difference between ML-predicted and historical conversion (positive = underpriced)',
+        PREDICTIONS.AVG_OFFERED_PRICE AS AVG(avg_offered_price) COMMENT = 'Current average offered price',
+        PREDICTIONS.AVG_ONBOARD_SPEND AS AVG(avg_onboard_spend) COMMENT = 'Average onboard spend for this segment',
+        PREDICTIONS.SAMPLE_SIZE AS SUM(sample_size) COMMENT = 'Number of pricing events in this segment'
+    )
+    COMMENT = 'ML-powered pricing intelligence showing predicted conversion probability, conversion gap analysis, and pricing action recommendations by cabin class and loyalty tier. Positive conversion_gap means the model predicts higher conversion than historical (segment is underpriced). Negative means overpriced.';
